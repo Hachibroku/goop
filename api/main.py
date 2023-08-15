@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import motor.motor_asyncio
 
 app = FastAPI()
 
@@ -26,3 +27,7 @@ def launch_details():
             "min": "00"
         }
     }
+
+MONGODB_URL = "mongodb://murph:password@db:27017"
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGODB_URL)
+database = client.mydatabase
