@@ -5,6 +5,11 @@ services:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
+      MONGO_URL: mongodb://murph:password@db:27017
+      SIGNING_KEY: f4swFgF4563DFG4348dpGazG45egdfggdFg9fGH5
+      WAIT_HOSTS: module3-project-gamma-db-1:27017
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
     build:
       context: api
       dockerfile: Dockerfile.dev
