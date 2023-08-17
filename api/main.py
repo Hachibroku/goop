@@ -32,6 +32,7 @@ def launch_details():
         }
     }
 
+
 MONGODB_URL = "mongodb://murph:password@db:27017"
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGODB_URL)
 database = client.mydatabase

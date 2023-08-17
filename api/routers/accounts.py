@@ -8,12 +8,9 @@ from fastapi import (
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from typing import Optional
 from pydantic import BaseModel
-
+from models.accounts import AccountIn, AccountOut
 from queries.accounts import (
-    AccountIn,
-    AccountOut,
     AccountQueries,
     DuplicateAccountError,
 )
