@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Nav from './Nav';
+import Main from './MainPage';
 import Construct from "./Construct.js";
+
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 
@@ -28,8 +32,20 @@ function App() {
 
   return (
     <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
+      <BrowserRouter>
+        <Nav />
+
+        <ErrorNotification error={error} />
+
+        <Routes>
+          <Route path="/construct" element={<Construct info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
+          <Route path="/main" element={<Main info={launchInfo} />} />
+        </Routes>
+
+      </BrowserRouter>
     </div>
   );
 }
