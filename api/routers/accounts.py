@@ -8,15 +8,13 @@ from fastapi import (
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from typing import Optional
 from pydantic import BaseModel
-
+from models.accounts import AccountIn, AccountOut
 from queries.accounts import (
-    AccountIn,
-    AccountOut,
     AccountQueries,
     DuplicateAccountError,
 )
+
 
 class AccountForm(BaseModel):
     username: str
@@ -44,7 +42,7 @@ async def get_protected(
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: AccountOut = Depends(authenticator.try_get_current_account_data)
+    account: AccountOut = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {
