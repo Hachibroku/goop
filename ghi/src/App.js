@@ -7,6 +7,7 @@ import Main from "./MainPage";
 import Trending from "./Trending";
 import Archive from "./Archive";
 import About from "./About";
+import Login from "./Login";
 
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
@@ -50,6 +51,10 @@ function App() {
             path="/create_account"
             element={<Create info={launchInfo} />}
           />
+        </Routes>
+
+        <Routes>
+          <Route path="/login" element={<Login info={launchInfo} />} />
         </Routes>
 
         <Routes>
