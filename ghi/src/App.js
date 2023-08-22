@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from './Nav';
+import Construct from "./Construct";
+import Create from "./AccountForm";
 import Main from './MainPage';
-import Construct from "./Construct.js";
+import Trending from "./Trending";
+import Archive from "./Archive";
+import About from "./About";
 
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
@@ -42,7 +46,23 @@ function App() {
         </Routes>
 
         <Routes>
+        <Route path="/create_account" element={<Create info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
           <Route path="/main" element={<Main info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
+        <Route path="/trending" element={<Trending info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
+        <Route path="/archive" element={<Archive info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
+        <Route path="/about" element={<About info={launchInfo} />} />
         </Routes>
 
       </BrowserRouter>

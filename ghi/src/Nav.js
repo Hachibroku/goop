@@ -12,16 +12,19 @@ function Nav() {
                     <NavLink to='/construct'>WIP</NavLink>
                 </li>
                 <li className='nav-item'>
+                    <NavLink to='/create_account'>Create Account</NavLink>
+                </li>
+                <li className='nav-item'>
                     <NavLink to='/account'>Account</NavLink>
                 </li>
                 <li className='nav-item'>
                     <NavLink to='/main'>Home</NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='/main'>Trending</NavLink>
+                    <NavLink to='/trending'>Trending</NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='/main'>Archive</NavLink>
+                    <NavLink to='/archive'>Archive</NavLink>
                 </li>
                 <li className='nav-item'>
                     <NavLink to='/about'>About</NavLink>
