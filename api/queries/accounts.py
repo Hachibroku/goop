@@ -8,7 +8,7 @@ class DuplicateAccountError(ValueError):
 
 
 class AccountQueries(Queries):
-    DB_NAME = "modjule3-project-gamma-db-1"
+    DB_NAME = "module3-project-gamma-db-1"
     COLLECTION = "accounts"
 
     def get(self, email: str) -> AccountOutWithPassword:
