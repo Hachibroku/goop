@@ -32,6 +32,11 @@ async def create_topic(
         )
 
 
+# @router.get("/api/topics/{title}", response_model=List[TopicOut])
+# async def get_single_topic(title: str, topics: TopicQueries = Depends()):
+#     return topics.get_topic(title)
+
+
 @router.get("/api/topics/{title}", response_model=List[TopicOut] | HttpError)
 async def get_topic_by_title(
     title: str, topics_queries: TopicQueries = Depends()
@@ -51,7 +56,7 @@ async def get_topic_by_title(
 )
 async def record_vote(
     topic_id: str,
-    user_id: int,
+    user_id: str,
     vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):

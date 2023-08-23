@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from .client import Queries
 from models.topics import TopicIn, TopicOut, Voting, SearchTopicOut
 from bson.objectid import ObjectId
@@ -23,14 +24,19 @@ class TopicQueries(Queries):
 
     def get_topic(self, title: str) -> List[TopicOut]:
         single_topic = []
-        db = self.collection.find_one({"title": title})
-        for document in db:
+        document = self.collection.find_one({"title": title})
+        if document:
             document["id"] = str(document["_id"])
             single_topic.append(TopicOut(**document))
         return single_topic
 
     def record_vote(self, topic_id: str, user_id: int, vote_type: str):
         topic = self.collection.find_one({"id": topic_id})
+        if topic is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Topic with id {topic_id} not found",
+            )
         voting = topic.get("voting", Voting(agree_count=0, disagree_count=0))
 
         if vote_type == "agree":

@@ -11,7 +11,7 @@ class TopicIn(BaseModel):
 
 # Model for casting a vote
 class Voting(BaseModel):
-    user_id: int
+    user_id: str
     agree_count: int
     disagree_count: int
 
@@ -22,7 +22,7 @@ class TopicOut(BaseModel):
     title: str
     image_url: str
     description: str
-    voting: Voting
+    voting: Optional[Voting]
 
 
 # THIS MODEL SHOULD HAVE ALL THE SAME KEY:VALUE AS TopicOut
