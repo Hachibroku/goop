@@ -1,26 +1,32 @@
-# from pydantic import BaseModel
+from models.accounts import AccountIn, AccountOutWithPassword
+from pymongo.errors import DuplicateKeyError
+from .client import Queries
 
 
-# class DuplicateAccountError(ValueError):
-#     pass
+class DuplicateAccountError(ValueError):
+    pass
 
 
-# class AccountIn(BaseModel):
-#     email: str
-#     password: str
-#     full_name: str
+class AccountQueries(Queries):
+    DB_NAME = "module3-project-gamma-db-1"
+    COLLECTION = "accounts"
 
-# class AccountOut(BaseModel):
-#     id: str
-#     email: str
-#     full_name: str
+    def get(self, email: str) -> AccountOutWithPassword:
+        props = self.collection.find_one({"email": email})
+        if not props:
+            return None
+        props["id"] = str(props["_id"])
+        return AccountOutWithPassword(**props)
 
-
-# class AccountOutWithPassword(AccountOut):
-#     hashed_password: str
-
-
-# class AccountQueries(Queries):
-#     def get(self, email: str) -> AccountOut:
-
-#     def create(self, info: AccountIn, hashed_password: str) -> AccountOut
+    def create(
+        self, info: AccountIn, hashed_password: str
+    ) -> AccountOutWithPassword:
+        props = info.dict()
+        props["hashed_password"] = hashed_password
+        print(hashed_password)
+        try:
+            self.collection.insert_one(props)
+        except DuplicateKeyError:
+            raise DuplicateAccountError()
+        props["id"] = str(props["_id"])
+        return AccountOutWithPassword(**props)
