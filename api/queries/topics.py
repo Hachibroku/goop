@@ -22,12 +22,17 @@ class TopicQueries(Queries):
         return TopicOut(**props)
 
     def get_topic(self, title: str) -> List[TopicOut]:
-        single_topic = []
-        db = self.collection.find_one({"title": title})
-        for document in db:
-            document["id"] = str(document["_id"])
-            single_topic.append(TopicOut(**document))
-        return single_topic
+        topic = self.collection.find_one({"title": title})
+        if topic is None:
+            return []
+        topic["id"] = str(topic["_id"])
+        return [TopicOut(**topic)]
+        # single_topic = []
+        # db = self.collection.find_one({"title": title})
+        # for document in db:
+        #     document["id"] = str(document["_id"])
+        #     single_topic.append(TopicOut(**document))
+        # return single_topic
 
     def record_vote(self, topic_id: str, user_id: int, vote_type: str):
         topic = self.collection.find_one({"id": topic_id})
