@@ -8,7 +8,7 @@ class DuplicateAccountError(ValueError):
 
 
 class AccountQueries(Queries):
-    DB_NAME = "modjule3-project-gamma-db-1"
+    DB_NAME = "module3-project-gamma-db-1"
     COLLECTION = "accounts"
 
     def get(self, email: str) -> AccountOutWithPassword:
@@ -18,7 +18,9 @@ class AccountQueries(Queries):
         props["id"] = str(props["_id"])
         return AccountOutWithPassword(**props)
 
-    def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
+    def create(
+        self, info: AccountIn, hashed_password: str
+    ) -> AccountOutWithPassword:
         props = info.dict()
         props["hashed_password"] = hashed_password
         print(hashed_password)
