@@ -12,6 +12,10 @@ import Login from "./Login";
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 
+
+import Navbar from "./MySrc/Navbar";
+import Home from "./components/pages/Home";
+
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
@@ -39,6 +43,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Nav />
+        {/* <Navbar /> */}
 
         <ErrorNotification error={error} />
 
@@ -57,9 +62,9 @@ function App() {
           <Route path="/login" element={<Login info={launchInfo} />} />
         </Routes>
 
-        <Routes>
+        {/* <Routes>
           <Route path="/main" element={<Main info={launchInfo} />} />
-        </Routes>
+        </Routes> */}
 
         <Routes>
           <Route path="/trending" element={<Trending info={launchInfo} />} />
@@ -72,6 +77,11 @@ function App() {
         <Routes>
           <Route path="/about" element={<About info={launchInfo} />} />
         </Routes>
+
+        <Routes>
+          <Route path="/main" element={<Home info={launchInfo} />} />
+        </Routes>
+
       </BrowserRouter>
     </div>
   );

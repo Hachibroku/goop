@@ -2,7 +2,6 @@ volumes:
   mongodb_data:
 
 services:
-  db:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
