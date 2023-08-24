@@ -35,6 +35,9 @@ function Nav() {
           <li className="nav-item">
             <NavLink to="/about">About</NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink to="/comment">Comment</NavLink>
+          </li>
         </ul>
       </nav>
     );

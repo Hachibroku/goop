@@ -8,6 +8,7 @@ import Trending from "./Trending";
 import Archive from "./Archive";
 import About from "./About";
 import Login from "./Login";
+import AccountPage from "./AccountPage";
 
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
@@ -15,6 +16,7 @@ import "./App.css";
 
 import Navbar from "./MySrc/Navbar";
 import Home from "./components/pages/Home";
+import Comment from "./comments/Comments";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -82,6 +84,13 @@ function App() {
           <Route path="/main" element={<Home info={launchInfo} />} />
         </Routes>
 
+        <Routes>
+          <Route path="/account" element={<AccountPage info={launchInfo} />} />
+        </Routes>
+
+        <Routes>
+          <Route path="/comment" element={<Comment info={launchInfo} />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

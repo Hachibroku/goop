@@ -1,13 +1,13 @@
 import React from "react";
 import "../App.css";
 import { Button } from "./Button";
-import "./HeroSection.css";
+import "./TopicSection.css";
 
-function HeroSection() {
+function TopicSection() {
   return (
-    <div className="hero-container">
+    <div className="topic-container">
       <h1>THIS IS WHERE TOPIC OF THE DAY DESCRIPTION WOULD GO</h1>
-      <div className="hero-btns">
+      <div className="topic-btns">
         <Button
           className="btns"
           buttonStyle="btn--outline"
@@ -34,4 +34,4 @@ function HeroSection() {
   );
 }
 
-export default HeroSection;
+export default TopicSection;
