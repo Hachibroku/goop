@@ -10,7 +10,7 @@ class DuplicateTopicError(ValueError):
 
 
 class TopicQueries(Queries):
-    DB_NAME = "module3-project-gamma-mongo-1"
+    DB_NAME = "module3-project-gamma-mongo"
     COLLECTION = "topics"
 
     def create(self, topic: TopicIn) -> TopicOut:
