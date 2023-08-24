@@ -16,7 +16,7 @@ class TopicQueries(Queries):
     def create(self, topic: TopicIn) -> TopicOut:
         props = topic.dict()
         props["voting"] = Voting(
-            user_id="", agree_count=0, disagree_count=0
+            user_id=[], agree_count=0, disagree_count=0
         ).dict()  # Initialize voting
         self.collection.insert_one(props)
         props["id"] = str(props["_id"])
@@ -46,17 +46,30 @@ class TopicQueries(Queries):
         else:
             voting = Voting(user_id="", agree_count=0, disagree_count=0)
 
-        if vote_type == "agree":
-            voting.agree_count += 1
-        elif vote_type == "disagree":
-            voting.disagree_count += 1
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid vote_type: {vote_type}. Expected 'agree' or 'disagree'.",
-            )
+        if user_id not in voting.user_id:
+            voting.user_id.append(user_id)
 
-        self.collection.update_one(
-            {"_id": topic_id},
-            {"$set": {"voting": voting.dict()}},
-        )
+            if vote_type == "agree":
+                voting.agree_count += 1
+            elif vote_type == "disagree":
+                voting.disagree_count += 1
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid vote_type: {vote_type}. Expected 'agree' or 'disagree'.",
+                )
+
+            self.collection.update_one(
+                {"_id": topic_id},
+                {"$set": {"voting": voting.dict()}},
+            )
+        else:
+            detail_message = "User with id {} has already voted.".format(
+                user_id
+            )
+            print(
+                f"Debugging: Detail message is {detail_message}"
+            )  # Debugging line to print the detail message
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail_message
+            )

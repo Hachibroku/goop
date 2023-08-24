@@ -11,7 +11,7 @@ class TopicIn(BaseModel):
 
 # Model for casting a vote
 class Voting(BaseModel):
-    user_id: str
+    user_id: List[str]
     agree_count: int
     disagree_count: int
 
