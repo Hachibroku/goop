@@ -12,6 +12,14 @@ from models.topics import (
 )
 
 
+class VoteInfo(BaseModel):
+    user_id: str
+    vote_type: str
+
+
+# created VoteInfo for data validation model
+
+
 class HttpError(BaseModel):
     detail: str
 
@@ -51,12 +59,13 @@ async def get_topic_by_title(
 )
 async def record_vote(
     topic_id: str,
-    user_id: int,
-    vote_type: str,
+    vote_info: VoteInfo,
     topics_queries: TopicQueries = Depends(),
 ):
     try:
-        topics_queries.record_vote(topic_id, user_id, vote_type)
+        topics_queries.record_vote(
+            topic_id, vote_info.user_id, vote_info.vote_type
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
