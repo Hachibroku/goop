@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from .client import Queries
 from models.topics import TopicIn, TopicOut, Voting, SearchTopicOut
 from bson.objectid import ObjectId
@@ -43,17 +44,37 @@ class TopicQueries(Queries):
         # changed to "_id" bc "id" does not exist in our database
         if not topic:
             raise ValueError(f"No topic found with id: {topic_id}")
-        voting = topic.get(
-            "voting", {"agree_count": 0, "disagree_count": 0, "user_ids": []}
-        )
-        if vote_type == "agree":
-            voting["agree_count"] += 1
-        elif vote_type == "disagree":
-            voting["disagree_count"] += 1
+        voting_data = topic.get("voting")
+        if voting_data:
+            voting = Voting(**voting_data)
+        else:
+            voting = Voting(user_ids=[], agree_count=0, disagree_count=0)
 
-        voting["user_ids"].append(user_id)
+        # topic.get(
+        #     "voting", {"agree_count": 0, "disagree_count": 0, "user_ids": []}
+        # )
+        if user_id in voting.user_ids:
+            # changed to in for list
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"User with id: {user_id} has already voted.",
+            )
+            # created error code for checking user_id if it has voted or not
+        if vote_type == "agree":
+            # voting["agree_count"] += 1
+            voting.agree_count += 1
+        elif vote_type == "disagree":
+            # voting["disagree_count"] += 1
+            voting.disagree_count += 1
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid vote_type: {vote_type}. Expected 'agree' or 'disagree'.",
+            )
+
+        voting.user_ids.append(user_id)
 
         self.collection.update_one(
             {"id": ObjectId(topic_id)},
-            {"$set": {"voting": voting}},
+            {"$set": {"voting": voting.dict()}},
         )

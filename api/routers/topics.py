@@ -10,6 +10,7 @@ from models.topics import (
     TopicOut,
     Voting,
 )
+from bson.objectid import ObjectId
 
 
 class VoteInfo(BaseModel):
@@ -59,13 +60,13 @@ async def get_topic_by_title(
 )
 async def record_vote(
     topic_id: str,
-    vote_info: VoteInfo,
+    user_id: str,
+    vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):
+    topic_id = ObjectId(topic_id)
     try:
-        topics_queries.record_vote(
-            topic_id, vote_info.user_id, vote_info.vote_type
-        )
+        topics_queries.record_vote(topic_id, user_id, vote_type)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
