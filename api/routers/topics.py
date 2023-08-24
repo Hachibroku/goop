@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from typing import List
+from bson import ObjectId
 from queries.topics import TopicQueries
 from authenticator import (
     authenticator,
@@ -10,6 +11,7 @@ from models.topics import (
     TopicOut,
     Voting,
 )
+import traceback
 
 
 class HttpError(BaseModel):
@@ -60,9 +62,12 @@ async def record_vote(
     vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):
+    topic_id = ObjectId(topic_id)
+    # user_id = ObjectId(user_id) this will probably be required later
     try:
         topics_queries.record_vote(topic_id, user_id, vote_type)
     except Exception as e:
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
