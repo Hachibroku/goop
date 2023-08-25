@@ -67,6 +67,9 @@ async def record_vote(
     topic_id = ObjectId(topic_id)
     try:
         topics_queries.record_vote(topic_id, user_id, vote_type)
+        print("topic_id ", topic_id)
+        print("user_id ", user_id)
+        print("vote_type ", vote_type)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)

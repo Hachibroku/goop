@@ -63,6 +63,7 @@ class TopicQueries(Queries):
         if vote_type == "agree":
             # voting["agree_count"] += 1
             voting.agree_count += 1
+            print("agree")
         elif vote_type == "disagree":
             # voting["disagree_count"] += 1
             voting.disagree_count += 1
@@ -75,6 +76,6 @@ class TopicQueries(Queries):
         voting.user_ids.append(user_id)
 
         self.collection.update_one(
-            {"id": ObjectId(topic_id)},
+            {"_id": ObjectId(topic_id)},
             {"$set": {"voting": voting.dict()}},
         )
