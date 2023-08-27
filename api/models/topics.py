@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 
@@ -7,6 +7,11 @@ class TopicIn(BaseModel):
     title: str
     image_url: str
     description: str
+
+
+class Comment(BaseModel):
+    user_id: str
+    content: str = Field(..., max_length=140)
 
 
 # Model for casting a vote
@@ -23,6 +28,7 @@ class TopicOut(BaseModel):
     image_url: str
     description: str
     voting: Optional[Voting]
+    comments: Optional[List[Comment]] = []
 
 
 # THIS MODEL SHOULD HAVE ALL THE SAME KEY:VALUE AS TopicOut
