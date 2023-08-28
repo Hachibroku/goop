@@ -74,3 +74,16 @@ async def record_vote(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
+
+
+@router.get("/api/topics/{topic_id}/voting", response_model=Voting | HttpError)
+async def get_voting_data_by_topic_id(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        voting_data = topics_queries.get_voting_data(topic_id)
+        return voting_data
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )

@@ -79,3 +79,14 @@ class TopicQueries(Queries):
             {"_id": ObjectId(topic_id)},
             {"$set": {"voting": voting.dict()}},
         )
+
+    def get_voting_data(self, topic_id: str) -> Voting:
+        topic = self.collection.find_one({"_id": ObjectId(topic_id)})
+        if not topic:
+            raise ValueError(f"No topic found with id: {topic_id}")
+        voting_data = topic.get("voting")
+        if not voting_data:
+            raise ValueError(
+                f"No voting data found for topic with id: {topic_id}"
+            )
+        return Voting(**voting_data)
