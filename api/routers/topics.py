@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict, Any
 from bson import ObjectId
 from queries.topics import TopicQueries
 from authenticator import (
@@ -46,6 +46,21 @@ async def get_topic_by_title(
         )
 
 
+@router.put("/api/topics/{topic_id}", response_model=TopicOut | HttpError)
+async def update_topic(
+    topic_id: str,
+    updated_topic: TopicIn,
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        updated = topics_queries.update_topic(topic_id, updated_topic)
+        return updated
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+
+
 @router.post(
     "/api/topics/{topic_id}/vote",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -62,6 +77,20 @@ async def record_vote(
         topics_queries.record_vote(topic_id, user_id, vote_type)
     except Exception as e:
         traceback.print_exc()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+
+
+@router.get("/api/votes/", response_model=List[Dict[str, Any]])
+async def get_votes(
+    user_id: str = Query(...),
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        user_votes = topics_queries.get_votes(user_id)
+        return user_votes
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )

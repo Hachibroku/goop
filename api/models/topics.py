@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Dict, Optional
 
 
 # MODEL FOR WHEN YOU MAKE A NEW TOPIC
@@ -16,7 +16,7 @@ class Comment(BaseModel):
 
 # Model for casting a vote
 class Voting(BaseModel):
-    user_id: List[str]
+    user_votes: Dict[str, str] = {}
     agree_count: int
     disagree_count: int
 

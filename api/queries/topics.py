@@ -17,7 +17,7 @@ class TopicQueries(Queries):
         props = topic.dict()
         props["voting"] = Voting(
             user_id=[], agree_count=0, disagree_count=0
-        ).dict()  # Initialize voting
+        ).dict()
         self.collection.insert_one(props)
         props["id"] = str(props["_id"])
         return TopicOut(**props)
@@ -29,6 +29,22 @@ class TopicQueries(Queries):
             document["id"] = str(document["_id"])
             single_topic.append(TopicOut(**document))
         return single_topic
+
+    # Update a topic by title
+    def update_topic(self, topic_id: str, updated_topic: TopicIn) -> TopicOut:
+        topic_id = ObjectId(topic_id)
+        result = self.collection.update_one(
+            {"_id": topic_id},
+            {"$set": updated_topic.dict()},
+        )
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Topic with id {topic_id} not found",
+            )
+        updated_topic = self.collection.find_one({"_id": topic_id})
+        updated_topic["id"] = str(updated_topic["_id"])
+        return TopicOut(**updated_topic)
 
     def record_vote(self, topic_id: str, user_id: str, vote_type: str):
         topic_id = ObjectId(topic_id)
@@ -49,7 +65,7 @@ class TopicQueries(Queries):
         if user_id in voting.user_id:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"User with id: {user_id} has already voted.",
+                detail=f"User with id {user_id} has already voted.",
             )
 
         elif user_id not in voting.user_id:
@@ -69,19 +85,28 @@ class TopicQueries(Queries):
                 {"_id": topic_id},
                 {"$set": {"voting": voting.dict()}},
             )
-        # 400 error works but not getting proper detail message in swagger
-        # below is my original code, above is alternate
-        # both work for the error but not the message
-        # else:
-        #     detail_message = (
-        #         "User with id {user_id} has already voted.".format(user_id)
-        #     )
-        #     print(
-        #         f"Debugging: Detail message is {detail_message}"
-        #     )  # Debugging line to print the detail message
-        #     raise HTTPException(
-        #         status_code=status.HTTP_400_BAD_REQUEST, detail=detail_message
-        #     )
+
+    def get_votes(self, user_id: str):
+        voted_topics = self.collection.find({"voting.user_id": user_id})
+        user_votes = []
+
+        for topic in voted_topics:
+            topic_id = str(topic["_id"])
+            title = topic.get("title", "")
+            voting_data = topic.get("voting")
+            voting = Voting(**voting_data)
+
+            if user_id in voting.user_id:
+                vote_type = "agree" if voting.agree_count > 0 else "disagree"
+                user_votes.append(
+                    {
+                        "topic_id": topic_id,
+                        "title": title,
+                        "vote_type": vote_type,
+                    }
+                )
+
+        return user_votes
 
     def add_comment(self, topic_id: str, user_id: str, content: str):
         topic_id = ObjectId(topic_id)
