@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict
 
 
 # MODEL FOR WHEN YOU MAKE A NEW TOPIC
@@ -10,12 +10,20 @@ class TopicIn(BaseModel):
 
 
 # Model for casting a vote
+# class Voting(BaseModel):
+#     user_ids: List[str]
+#     # changed to list of user_ids since we are going to store
+#     # multiple votes and multiple users
+#     agree_count: int
+#     disagree_count: int
+
+
 class Voting(BaseModel):
-    user_ids: List[str]
+    user_votes: Dict[str, str] = {}
     # changed to list of user_ids since we are going to store
     # multiple votes and multiple users
-    agree_count: int
-    disagree_count: int
+    agree_count: int = 0
+    disagree_count: int = 0
 
 
 # MODEL OF TOPIC WITH ITS ID AFTER ITS BEEN MADE, voting is embedded

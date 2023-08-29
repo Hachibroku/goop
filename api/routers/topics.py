@@ -64,12 +64,8 @@ async def record_vote(
     vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):
-    topic_id = ObjectId(topic_id)
     try:
         topics_queries.record_vote(topic_id, user_id, vote_type)
-        print("topic_id ", topic_id)
-        print("user_id ", user_id)
-        print("vote_type ", vote_type)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -87,3 +83,39 @@ async def get_voting_data_by_topic_id(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
         )
+
+
+@router.put(
+    "/api/topics/{topic_id}/vote", status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_user_vote(
+    topic_id: str,
+    user_id: str,
+    vote_type: str,
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        topics_queries.update_vote(topic_id, user_id, vote_type)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+    return {"detail": "Vote updated successfully."}
+
+
+@router.delete(
+    "/api/topics/{topic_id}/vote/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_user_vote(
+    topic_id: str,
+    user_id: str,
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        topics_queries.delete_vote(topic_id, user_id)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+    return {"detail": "Vote deleted successfully."}
