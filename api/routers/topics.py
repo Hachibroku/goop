@@ -1,16 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
-from typing import List, Dict, Any
-from bson import ObjectId
+from typing import List
 from queries.topics import TopicQueries
-from authenticator import (
-    authenticator,
-)
-from models.topics import (
-    TopicIn,
-    TopicOut,
-)
-import traceback
+from models.topics import TopicIn, TopicOut, Voting
 
 
 class HttpError(BaseModel):
@@ -61,6 +53,19 @@ async def update_topic(
         )
 
 
+@router.delete("/api/topics/{topic_id}", response_model=dict | HttpError)
+async def delete_topic(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        topics_queries.delete_topic(topic_id)
+        return {"message": "Topic deleted successfully"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+
+
 @router.post(
     "/api/topics/{topic_id}/vote",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -71,29 +76,61 @@ async def record_vote(
     vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):
-    topic_id = ObjectId(topic_id)
-    # user_id = ObjectId(user_id) this will probably be required later
     try:
         topics_queries.record_vote(topic_id, user_id, vote_type)
     except Exception as e:
-        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
 
 
-@router.get("/api/votes/", response_model=List[Dict[str, Any]])
-async def get_votes(
-    user_id: str = Query(...),
+@router.get("/api/topics/{topic_id}/voting", response_model=Voting | HttpError)
+async def get_voting_data_by_topic_id(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        voting_data = topics_queries.get_voting_data(topic_id)
+        return voting_data
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )
+
+
+@router.put(
+    "/api/topics/{topic_id}/vote", status_code=status.HTTP_204_NO_CONTENT
+)
+async def update_user_vote(
+    topic_id: str,
+    user_id: str,
+    vote_type: str,
     topics_queries: TopicQueries = Depends(),
 ):
     try:
-        user_votes = topics_queries.get_votes(user_id)
-        return user_votes
-    except Exception as e:
+        topics_queries.update_vote(topic_id, user_id, vote_type)
+    except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
+    return {"detail": "Vote updated successfully."}
+
+
+@router.delete(
+    "/api/topics/{topic_id}/vote/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_user_vote(
+    topic_id: str,
+    user_id: str,
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        topics_queries.delete_vote(topic_id, user_id)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+    return {"detail": "Vote deleted successfully."}
 
 
 @router.post("/api/topics/{topic_id}/comment")
@@ -111,7 +148,7 @@ async def add_comment_to_topic(
 async def get_comments(
     topic_id: str = None,
     user_id: str = None,
-    topics_queries: TopicQueries = Depends(),  # Assuming TopicQueries has a `get_comments` method
+    topics_queries: TopicQueries = Depends(),
 ):
     comments = topics_queries.get_comments(user_id=user_id, topic_id=topic_id)
     return {"comments": comments}
