@@ -13,7 +13,7 @@ class TopicQueries(Queries):
     DB_NAME = "module3-project-gamma-mongo"
     COLLECTION = "topics"
 
-    def create(self, topic: TopicIn) -> TopicOut:
+    def create_topic(self, topic: TopicIn) -> TopicOut:
         props = topic.dict()
         props["voting"] = Voting(
             user_id=[], agree_count=0, disagree_count=0
@@ -53,6 +53,11 @@ class TopicQueries(Queries):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Topic with id {topic_id} not found",
             )
+
+
+class VotingQueries(Queries):
+    DB_NAME = "module3-project-gamma-mongo"
+    COLLECTION = "topics"
 
     def record_vote(self, topic_id: str, user_id: str, vote_type: str):
         topic = self.collection.find_one({"_id": ObjectId(topic_id)})
@@ -178,6 +183,11 @@ class TopicQueries(Queries):
         self.collection.update_one(
             {"_id": ObjectId(topic_id)}, {"$set": {"voting": voting_data}}
         )
+
+
+class CommentQueries(Queries):
+    DB_NAME = "module3-project-gamma-mongo"
+    COLLECTION = "topics"
 
     def add_comment(self, topic_id: str, user_id: str, content: str):
         topic_id = ObjectId(topic_id)
