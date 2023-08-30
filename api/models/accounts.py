@@ -4,14 +4,14 @@ from typing import List, Optional
 
 class AccountIn(BaseModel):
     email: str
+    username: str
     password: str
-    full_name: str
 
 
 class AccountOut(BaseModel):
     id: str
     email: str
-    full_name: str
+    username: str
 
 
 class AccountOutWithPassword(AccountOut):

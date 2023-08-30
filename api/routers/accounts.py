@@ -9,7 +9,7 @@ from fastapi import (
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
-from models.accounts import AccountIn, AccountOut
+from models.accounts import AccountIn, AccountOut, AccountOutWithPassword
 from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
@@ -17,6 +17,7 @@ from queries.accounts import (
 
 
 class AccountForm(BaseModel):
+    email: str
     username: str
     password: str
 
@@ -67,6 +68,26 @@ async def create_account(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot create an account with those credentials",
         )
-    form = AccountForm(username=info.email, password=info.password)
+    form = AccountForm(
+        email=info.email, username=info.username, password=info.password
+    )
     token = await authenticator.login(response, request, form, accounts)
     return AccountToken(account=account, **token.dict())
+
+
+@router.get("/api/accounts/{email}", response_model=AccountOutWithPassword)
+async def get_account_by_email(
+    email: str, account_queries: AccountQueries = Depends()
+):
+    try:
+        account = account_queries.get(email)
+        if not account:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Account not found",
+            )
+        return account
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )

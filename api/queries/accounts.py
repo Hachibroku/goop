@@ -8,7 +8,7 @@ class DuplicateAccountError(ValueError):
 
 
 class AccountQueries(Queries):
-    DB_NAME = "module3-project-gamma-db-1"
+    DB_NAME = "module3-project-gamma-mongo"
     COLLECTION = "accounts"
 
     def get(self, email: str) -> AccountOutWithPassword:

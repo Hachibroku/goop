@@ -1,24 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
 from typing import List
 from queries.topics import TopicQueries
-from authenticator import (
-    authenticator,
-)
-from models.topics import (
-    TopicIn,
-    TopicOut,
-    Voting,
-)
-from bson.objectid import ObjectId
-
-
-class VoteInfo(BaseModel):
-    user_id: str
-    vote_type: str
-
-
-# created VoteInfo for data validation model
+from models.topics import TopicIn, TopicOut, Voting
 
 
 class HttpError(BaseModel):
@@ -51,6 +35,34 @@ async def get_topic_by_title(
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )
+
+
+@router.put("/api/topics/{topic_id}", response_model=TopicOut | HttpError)
+async def update_topic(
+    topic_id: str,
+    updated_topic: TopicIn,
+    topics_queries: TopicQueries = Depends(),
+):
+    try:
+        updated = topics_queries.update_topic(topic_id, updated_topic)
+        return updated
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
+
+
+@router.delete("/api/topics/{topic_id}", response_model=dict | HttpError)
+async def delete_topic(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        topics_queries.delete_topic(topic_id)
+        return {"message": "Topic deleted successfully"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
 
 
@@ -119,3 +131,45 @@ async def delete_user_vote(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
     return {"detail": "Vote deleted successfully."}
+
+
+@router.post("/api/topics/{topic_id}/comment")
+async def add_comment_to_topic(
+    topic_id: str,
+    user_id: str = Query(...),
+    content: str = Query(...),
+    topics_queries: TopicQueries = Depends(),
+):
+    topics_queries.add_comment(topic_id, user_id, content)
+    return {"message": "Comment added successfully."}
+
+
+@router.get("/api/comments/")
+async def get_comments(
+    topic_id: str = None,
+    user_id: str = None,
+    topics_queries: TopicQueries = Depends(),
+):
+    comments = topics_queries.get_comments(user_id=user_id, topic_id=topic_id)
+    return {"comments": comments}
+
+
+@router.put("/api/topics/{topic_id}/comment")
+async def update_comment(
+    topic_id: str,
+    user_id: str = Query(...),
+    new_content: str = Query(...),
+    topics_queries: TopicQueries = Depends(),
+):
+    topics_queries.update_comment(topic_id, user_id, new_content)
+    return {"message": "Comment updated successfully."}
+
+
+@router.delete("/api/topics/{topic_id}/comment")
+async def delete_comment(
+    topic_id: str,
+    user_id: str = Query(...),
+    topics_queries: TopicQueries = Depends(),
+):
+    topics_queries.delete_comment(topic_id, user_id)
+    return {"message": "Comment deleted successfully."}

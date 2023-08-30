@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from .client import Queries
-from models.topics import TopicIn, TopicOut, Voting, SearchTopicOut
-from bson.objectid import ObjectId
+from models.topics import TopicIn, TopicOut, Voting, Comment
+from bson import ObjectId
 from typing import List
 
 
@@ -10,7 +10,7 @@ class DuplicateTopicError(ValueError):
 
 
 class TopicQueries(Queries):
-    DB_NAME = "module3-project-gamma-mongo-1"
+    DB_NAME = "module3-project-gamma-mongo"
     COLLECTION = "topics"
 
     def create(self, topic: TopicIn) -> TopicOut:
@@ -27,17 +27,36 @@ class TopicQueries(Queries):
         # return TopicOut(**props)
 
     def get_topic(self, title: str) -> List[TopicOut]:
-        topic = self.collection.find_one({"title": title})
-        if topic is None:
-            return []
-        topic["id"] = str(topic["_id"])
-        return [TopicOut(**topic)]
-        # single_topic = []
-        # db = self.collection.find_one({"title": title})
-        # for document in db:
-        #     document["id"] = str(document["_id"])
-        #     single_topic.append(TopicOut(**document))
-        # return single_topic
+        single_topic = []
+        document = self.collection.find_one({"title": title})
+        if document:
+            document["id"] = str(document["_id"])
+            single_topic.append(TopicOut(**document))
+        return single_topic
+
+    def update_topic(self, topic_id: str, updated_topic: TopicIn) -> TopicOut:
+        topic_id = ObjectId(topic_id)
+        result = self.collection.update_one(
+            {"_id": topic_id},
+            {"$set": updated_topic.dict()},
+        )
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Topic with id {topic_id} not found",
+            )
+        updated_topic = self.collection.find_one({"_id": topic_id})
+        updated_topic["id"] = str(updated_topic["_id"])
+        return TopicOut(**updated_topic)
+
+    def delete_topic(self, topic_id: str):
+        topic_id = ObjectId(topic_id)
+        result = self.collection.delete_one({"_id": topic_id})
+        if result.deleted_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Topic with id {topic_id} not found",
+            )
 
     def record_vote(self, topic_id: str, user_id: str, vote_type: str):
         topic = self.collection.find_one({"_id": ObjectId(topic_id)})
@@ -74,38 +93,6 @@ class TopicQueries(Queries):
         self.collection.update_one(
             {"_id": ObjectId(topic_id)}, {"$set": {"voting": voting_data}}
         )
-        # OLD CODE
-        # if voting_data:
-        #     voting = Voting(**voting_data)
-        # else:
-        #     voting = Voting(user_ids=[], agree_count=0, disagree_count=0)
-
-        # if user_id in voting.user_ids:
-
-        #     raise HTTPException(
-        #         status_code=status.HTTP_400_BAD_REQUEST,
-        #         detail=f"User with id: {user_id} has already voted.",
-        #     )
-
-        # if vote_type == "agree":
-
-        #     voting.agree_count += 1
-        #     print("agree")
-        # elif vote_type == "disagree":
-
-        #     voting.disagree_count += 1
-        # else:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_400_BAD_REQUEST,
-        #         detail=f"Invalid vote_type: {vote_type}. Expected 'agree' or 'disagree'.",
-        #     )
-
-        # voting.user_ids.append(user_id)
-
-        # self.collection.update_one(
-        #     {"_id": ObjectId(topic_id)},
-        #     {"$set": {"voting": voting.dict()}},
-        # )
 
     def get_voting_data(self, topic_id: str) -> Voting:
         topic = self.collection.find_one({"_id": ObjectId(topic_id)})
@@ -196,89 +183,69 @@ class TopicQueries(Queries):
             {"_id": ObjectId(topic_id)}, {"$set": {"voting": voting_data}}
         )
 
-    # def update_vote(self, topic_id: str, user_id: str, new_vote_type: str):
-    #     topic = self.collection.find_one({"_id": ObjectId(topic_id)})
-    #     if not topic:
-    #         raise ValueError(f"No topic found with id: {topic_id}")
+    def add_comment(self, topic_id: str, user_id: str, content: str):
+        topic_id = ObjectId(topic_id)
+        topic = self.collection.find_one({"_id": topic_id})
 
-    #     voting_data = topic.get("voting")
-    #     if not voting_data:
-    #         raise ValueError(
-    #             f"No voting data found for topic with id: {topic_id}"
-    #         )
+        if topic is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Topic with id {topic_id} not found",
+            )
 
-    #     if user_id not in voting_data["user_ids"]:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_400_BAD_REQUEST,
-    #             detail=f"User with id: {user_id} has not voted yet.",
-    #         )
+        comments_data = topic.get("comments", [])
+        comments = [Comment(**comment_data) for comment_data in comments_data]
 
-    #     prev_vote_type = (
-    #         "agree"
-    #         if voting_data["agree_count"]
-    #         > len(voting_data["user_ids"]) - voting_data["disagree_count"]
-    #         else "disagree"
-    #     )
+        # Check if user already commented
+        if any(comment.user_id == user_id for comment in comments):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"User with id {user_id} has already commented.",
+            )
 
-    #     if prev_vote_type == new_vote_type:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_400_BAD_REQUEST,
-    #             detail=f"User with id: {user_id} has already voted '{new_vote_type}'.",
-    #         )
+        new_comment = Comment(user_id=user_id, content=content)
+        comments.append(new_comment)
 
-    #     if new_vote_type == "agree":
-    #         voting_data["agree_count"] += 1
-    #         voting_data["disagree_count"] = max(
-    #             voting_data["disagree_count"] - 1, 0
-    #         )
-    #     elif new_vote_type == "disagree":
-    #         voting_data["disagree_count"] += 1
-    #         voting_data["agree_count"] = max(voting_data["agree_count"] - 1, 0)
-    #     else:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_400_BAD_REQUEST,
-    #             detail=f"Invalid vote_type: {new_vote_type}. Expected 'agree' or 'disagree'.",
-    #         )
+        self.collection.update_one(
+            {"_id": topic_id},
+            {"$set": {"comments": [comment.dict() for comment in comments]}},
+        )
 
-    #     self.collection.update_one(
-    #         {"_id": ObjectId(topic_id)}, {"$set": {"voting": voting_data}}
-    #     )
+    def get_comments(self, user_id: str = None, topic_id: str = None):
+        query = {}
+        if user_id:
+            query["comments.user_id"] = user_id
+        if topic_id:
+            query["_id"] = ObjectId(topic_id)
 
-    # def delete_vote(self, topic_id: str, user_id: str):
-    #     topic = self.collection.find_one({"_id": ObjectId(topic_id)})
-    #     if not topic:
-    #         raise ValueError(f"No topic found with id: {topic_id}")
+        topics_with_comments = self.collection.find(query, {"comments": 1})
 
-    #     voting_data = topic.get("voting")
-    #     if not voting_data:
-    #         raise ValueError(
-    #             f"No voting data found for topic with id: {topic_id}"
-    #         )
+        # Extract comments and possibly filter them more
+        all_comments = []
+        for topic in topics_with_comments:
+            comments = topic.get("comments", [])
+            all_comments.extend(comments)
 
-    #     if user_id not in voting_data["user_ids"]:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_400_BAD_REQUEST,
-    #             detail=f"User with id: {user_id} has not voted yet.",
-    #         )
+        return all_comments
 
-    #     prev_vote_type = voting_data["user_votes"].get(user_id)
+    def update_comment(self, topic_id: str, user_id: str, new_content: str):
+        result = self.collection.update_one(
+            {"_id": ObjectId(topic_id), "comments.user_id": user_id},
+            {"$set": {"comments.$.content": new_content}},
+        )
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Comment by user {user_id} in topic {topic_id} not found.",
+            )
 
-    #     if not prev_vote_type:
-    #         raise HTTPException(
-    #             status_code=status.HTTP_400_BAD_REQUEST,
-    #             detail=f"User vote type not found. Data inconsistency.",
-    #         )
-
-    #     if prev_vote_type == "agree":
-    #         voting_data["agree_count"] = max(voting_data["agree_count"] - 1, 0)
-    #     elif prev_vote_type == "disagree":
-    #         voting_data["disagree_count"] = max(
-    #             voting_data["disagree_count"] - 1, 0
-    #         )
-
-    #     voting_data["user_ids"].remove(user_id)
-    #     del voting_data["user_votes"][user_id]
-
-    #     self.collection.update_one(
-    #         {"_id": ObjectId(topic_id)}, {"$set": {"voting": voting_data}}
-    #     )
+    def delete_comment(self, topic_id: str, user_id: str):
+        result = self.collection.update_one(
+            {"_id": ObjectId(topic_id)},
+            {"$pull": {"comments": {"user_id": user_id}}},
+        )
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Comment by user {user_id} in topic {topic_id} not found.",
+            )
