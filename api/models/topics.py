@@ -1,31 +1,33 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel, Field
+from typing import List, Dict, Optional
 
 
-# MODEL FOR WHEN YOU MAKE A NEW TOPIC
 class TopicIn(BaseModel):
     title: str
     image_url: str
     description: str
 
 
-# Model for casting a vote
-class Voting(BaseModel):
+class Comment(BaseModel):
     user_id: str
-    agree_count: int
-    disagree_count: int
+    content: str = Field(..., max_length=140)
 
 
-# MODEL OF TOPIC WITH ITS ID AFTER ITS BEEN MADE, voting is embedded
+class Voting(BaseModel):
+    user_votes: Dict[str, str] = {}
+    agree_count: int = 0
+    disagree_count: int = 0
+
+
 class TopicOut(BaseModel):
     id: str
     title: str
     image_url: str
     description: str
     voting: Optional[Voting]
+    comments: Optional[List[Comment]] = []
 
 
-# THIS MODEL SHOULD HAVE ALL THE SAME KEY:VALUE AS TopicOut
 class SearchTopicOut(BaseModel):
     id: str
     title: str
@@ -33,11 +35,9 @@ class SearchTopicOut(BaseModel):
     description: str
 
 
-# THIS MODEL IS TO SEARCH LIST OF TOPICS BY THE PARAMETERS IN SearchTopicOut
 class SearchTopicList(BaseModel):
     topics: List[SearchTopicOut]
 
 
-# THIS MODEL IS TO SHOW A LIST OF ALL TOPICS
 class TopicList(BaseModel):
     topics: List[TopicOut]
