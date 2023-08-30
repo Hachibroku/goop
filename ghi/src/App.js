@@ -8,6 +8,9 @@ import TokenPage from "./TokenPage";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 // import ErrorNotification from "./ErrorNotification";
 import "./App.css";
+import Main from "./components/Mainpage/Main";
+import Comment from "./components/comments/Comments";
+import AccountPage from "./AccountPage";
 
 const baseUrl="http://localhost:8000"
 
@@ -41,17 +44,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Nav />
-        {/* <Navbar /> */}
-
-        <ErrorNotification error={error} />
-
         <Routes>
-          <Route path="/construct" element={<Construct />} />
           <Route path="/create_account" element={<Create />} />
           <Route path="/main" element={<Main />} />
-          {/* Main maybe needs to be Home */}
-          <Route path="/trending" element={<Trending />} />
-          <Route path="/archive" element={<Archive />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/token" element={<TokenPage />} />

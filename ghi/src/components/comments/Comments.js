@@ -6,9 +6,9 @@ import {
   createComment as createCommentApi,
   updateComment as updateCommentApi,
   deleteComment as deleteCommentApi,
-} from "../api";
-import TopicSection from "/app/src/MySrc/TopicSection";
-import Footer from "/app/src/MySrc/Footer";
+} from "../../api";
+import TopicSection from "/app/src/components/Mainpage/TopicSection";
+import Footer from "/app/src/components/Mainpage/Footer";
 
 const Comments = ({ currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);

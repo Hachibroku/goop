@@ -37,45 +37,62 @@ const fetchData = async () => {
 
 
     return (
-        <nav className='Navbar'>
-            <img src='https://imgur.com/tCGZNdq.jpg' alt='logo' width='100' height='100' />
+      <nav className="Navbar">
+        <img
+          src="https://imgur.com/tCGZNdq.jpg"
+          alt="logo"
+          width="100"
+          height="100"
+        />
 
-            {username ? (
-            <h1 className="token-user">Hello, {username}</h1> ) : (
-            <h1 className="token-user">Please log in</h1>
-            )}
+        {username ? (
+          <h1 className="token-user">Hello, {username}</h1>
+        ) : (
+          <h1 className="token-user">Please log in</h1>
+        )}
 
-            <ul>
-                <li className='nav-item'>
-                    <NavLink to='/create_account'>Create Account</NavLink>
-                </li>
+        <ul>
+          <li className="nav-item">
+            <NavLink to="/create_account">Create Account</NavLink>
+          </li>
 
-                <li className='nav-item'>
-                    <NavLink to='/account'>Account</NavLink>
-                </li>
+          <li className="nav-item">
+            <NavLink to="/account">Account</NavLink>
+          </li>
 
-                <li className='nav-item'>
-                    <NavLink to='/main'>Home</NavLink>
-                </li>
+          <li className="nav-item">
+            <NavLink to="/main">Home</NavLink>
+          </li>
 
-
-                {/* <li className='nav-item'>
+          {/* <li className='nav-item'>
                     <NavLink to='/login'>Login</NavLink>
                 </li> */}
 
-                <li className='nav-item'>
-                    <NavLink to='/token'>Token</NavLink>
-                </li>
+          <li className="nav-item">
+            <NavLink to="/token">Token</NavLink>
+          </li>
 
-                {username ? (
-                <li className='nav-item'>
-                    <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>
-                </li> ) : (  <li className='nav-item'>
-                    <NavLink to='/login'>Login</NavLink>
-                </li> )}
+          <li className="nav-item">
+            <NavLink to="/comment">Comment</NavLink>
+          </li>
 
-            </ul>
-        </nav>
+          <li className="nav-item">
+            <NavLink to="/about">About</NavLink>
+          </li>
+
+          {username ? (
+            <li className="nav-item">
+              <NavLink to="/login" onClick={handleLogout}>
+                Logout
+              </NavLink>
+            </li>
+          ) : (
+            <li className="nav-item">
+              <NavLink to="/login">Login</NavLink>
+            </li>
+          )}
+        </ul>
+      </nav>
     );
 }
 
