@@ -1,0 +1,49 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 130px; /* Adjust as needed */
+  height: 100%; /* Extend to full height */
+  padding: 30px;
+  background-color: #423449; /* Set your desired background color */
+  color: #f88f56; /* Set text color */
+  font-family: Arial, sans-serif; /* Use a web-safe font or specify a custom font */
+  display: flex; /* Use Flexbox for positioning */
+  flex-direction: column; /* Align items vertically */
+  justify-content: flex-start; /* Align items at the top */
+  align-items: center; /* Center items horizontally */
+  z-index: 2;
+}
+
+.nav-item {
+  margin-bottom: 10px;
+  padding-top: 15px;
+  padding-right: 40px;
+  display: flex; /* Use Flexbox for positioning */
+  justify-content: center; /* Center items horizontally */
+  text-align: center;
+}
+
+.nav-item a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color from parent */
+  font-weight: 300; /* Adjust font weight (lighter) */
+  font-size: 23px; /* Adjust font size */
+}
+
+.token-item {
+  color:white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 20%;
+}
+
+.token-user {
+  color:rgb(255, 255, 255);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 40%;
+}
