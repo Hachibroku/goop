@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Nav.css';
+// import './Nav.css';
 function Nav() {
     return (
       <nav className="Navbar">
@@ -12,9 +12,6 @@ function Nav() {
         />
         <ul>
           <li className="nav-item">
-            <NavLink to="/construct">WIP</NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink to="/create_account">Create Account</NavLink>
           </li>
           <li className="nav-item">
@@ -25,12 +22,6 @@ function Nav() {
           </li>
           <li className="nav-item">
             <NavLink to="/main">Home</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/trending">Trending</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/archive">Archive</NavLink>
           </li>
           <li className="nav-item">
             <NavLink to="/about">About</NavLink>

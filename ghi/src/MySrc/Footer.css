@@ -30,11 +30,6 @@
   font-size: 24px;
 }
 
-.footer-subscription-text {
-  margin-bottom: 24px;
-  font-size: 20px;
-}
-
 .footer-input {
   padding: 8px 20px;
   border-radius: 2px;
@@ -83,22 +78,4 @@
 
 .footer-input::placeholder {
   color: #b1b1b1;
-}
-
-.social-media {
-  max-width: 1000px;
-  width: 100%;
-}
-
-.social-media-wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  max-width: 1000px;
-  margin: 40px auto 0 auto;
-}
-
-.website-rights {
-  color: #fff;
 }
