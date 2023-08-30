@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import "./Form.css";
+import React, { useState } from 'react';
+import './Form.css';
 
 const AccountForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    username: "",
-    password: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -24,35 +26,52 @@ const AccountForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:8000/api/accounts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log('Account created successfully');
+        setSuccess(true);
+        setError(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          username: '',
+          password: '',
+        });
+      } else {
+        console.log('Account was not created');
+        setSuccess(false);
+        setError(true);
+
+        if (responseData && responseData.error) {
+          console.log('Error:', responseData.error);
+        }
+
+      }
+    } catch (error) {
+      console.log('An error occurred:', error);
+    }
   };
 
   return (
-    <div>
-      <h1 className="formHeader"> Create an Account </h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
+      <div>
+        {success && <div className="notification success">Account created successfully</div>}
+        {error && <div className="notification error">Account not created</div>}
+    <h1 className='formHeader'> Create an Account </h1>
+    <form onSubmit={handleSubmit}>
 
         <label>
           Email:
@@ -65,33 +84,35 @@ const AccountForm = () => {
         </label>
         <br />
 
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
+      <label>
+        Username:
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
 
-        <label>
-          Password:
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </label>
-        <button type="button" onClick={togglePasswordVisibility}>
-          {showPassword ? "Hide" : "Show"} Password
-        </button>
-        <br />
+      <label>
+        Password:
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+      </label>
+      <button type="button"
+              onClick={togglePasswordVisibility}>
+        {showPassword ? 'Hide' : 'Show'} Password
+      </button>
+      <br />
 
-        <button type="submit">Submit</button>
-      </form>
+
+      <button type="submit">Submit</button>
+    </form>
     </div>
   );
 };

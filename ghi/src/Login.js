@@ -1,61 +1,50 @@
-import React, { useState } from "react";
-import "./Login.css";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useState } from "react";
+import './Form.css'
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { login } = useToken();
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(username, password);
+    e.target.reset();
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   return (
     <div>
-      <h1 className="formHeader"> Log In </h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-
-        <label>
-          Password:
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </label>
-        <button type="button" onClick={togglePasswordVisibility}>
-          {showPassword ? "Hide" : "Show"} Password
-        </button>
-        <br />
-
-        <button type="submit">Login</button>
-      </form>
+      <h1 className='formHeader'>Login</h1>
+      <div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="div-login">
+            <label className="label-login">Email:</label>
+            <input
+              name="username" type="text" className="input-login"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="div-login">
+            <label className="label-login">Password:</label>
+            <input
+              name="password" type={showPassword ? 'text' : 'password'} className="input-login"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="button" onClick={togglePasswordVisibility}>
+                   {showPassword ? 'Hide' : 'Show'} Password
+            </button>
+          </div>
+          <div>
+            <input className="button-login" type="submit" value="Login" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

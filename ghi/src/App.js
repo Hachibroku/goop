@@ -4,40 +4,40 @@ import Nav from "./Nav";
 import Create from "./AccountForm";
 import About from "./About";
 import Login from "./Login";
-import AccountPage from "./AccountPage";
-
-import ErrorNotification from "./ErrorNotification";
+import TokenPage from "./TokenPage";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+// import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 
+const baseUrl="http://localhost:8000"
 
-import Navbar from "./MySrc/Navbar";
-import Home from "./components/pages/Home";
-import Comment from "./comments/Comments";
 
 function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
+  // const [launchInfo, setLaunchInfo] = useState([]);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
+  // useEffect(() => {
+  //   async function getData() {
+  //     let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
+  //     console.log("fastapi url: ", url);
+  //     let response = await fetch(url);
+  //     console.log("------- hello? -------");
+  //     let data = await response.json();
 
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, []);
+  //     if (response.ok) {
+  //       console.log("got launch data!");
+  //       setLaunchInfo(data.launch_details);
+  //     } else {
+  //       console.log("drat! something happened");
+  //       setError(data.message);
+  //     }
+  //   }
+  //   getData();
+  // }, []);
+
 
   return (
+    <AuthProvider baseUrl={baseUrl}>
     <div>
       <BrowserRouter>
         <Nav />
@@ -46,33 +46,21 @@ function App() {
         <ErrorNotification error={error} />
 
         <Routes>
-          <Route
-            path="/create_account"
-            element={<Create info={launchInfo} />}
-          />
-        </Routes>
-
-        <Routes>
-          <Route path="/login" element={<Login info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/about" element={<About info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/main" element={<Home info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/account" element={<AccountPage info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/comment" element={<Comment info={launchInfo} />} />
+          <Route path="/construct" element={<Construct />} />
+          <Route path="/create_account" element={<Create />} />
+          <Route path="/main" element={<Main />} />
+          {/* Main maybe needs to be Home */}
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/token" element={<TokenPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/comment" element={<Comment />} />
         </Routes>
       </BrowserRouter>
     </div>
+    </AuthProvider>
   );
 }
 
