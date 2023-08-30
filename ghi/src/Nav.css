@@ -12,6 +12,7 @@
   flex-direction: column; /* Align items vertically */
   justify-content: flex-start; /* Align items at the top */
   align-items: center; /* Center items horizontally */
+  z-index: 2;
 }
 
 .nav-item {
@@ -20,6 +21,7 @@
   padding-right: 40px;
   display: flex; /* Use Flexbox for positioning */
   justify-content: center; /* Center items horizontally */
+  text-align: center;
 }
 
 .nav-item a {
@@ -27,4 +29,21 @@
   color: inherit; /* Inherit text color from parent */
   font-weight: 300; /* Adjust font weight (lighter) */
   font-size: 23px; /* Adjust font size */
+}
+
+.token-item {
+  color:white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 20%;
+}
+
+.token-user {
+  color:rgb(255, 255, 255);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 40%;
 }

@@ -74,28 +74,6 @@ const AccountForm = () => {
     <form onSubmit={handleSubmit}>
 
         <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-
-        <label>
           Email:
           <input
             type="email"

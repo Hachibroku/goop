@@ -7,68 +7,57 @@ import Main from "./MainPage";
 import Trending from "./Trending";
 import Archive from "./Archive";
 import About from "./About";
-
-import ErrorNotification from "./ErrorNotification";
+import Login from "./Login";
+import TokenPage from "./TokenPage";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+// import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 
+const baseUrl="http://localhost:8000"
+
+
 function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
+  // const [launchInfo, setLaunchInfo] = useState([]);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
+  // useEffect(() => {
+  //   async function getData() {
+  //     let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
+  //     console.log("fastapi url: ", url);
+  //     let response = await fetch(url);
+  //     console.log("------- hello? -------");
+  //     let data = await response.json();
 
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, []);
+  //     if (response.ok) {
+  //       console.log("got launch data!");
+  //       setLaunchInfo(data.launch_details);
+  //     } else {
+  //       console.log("drat! something happened");
+  //       setError(data.message);
+  //     }
+  //   }
+  //   getData();
+  // }, []);
+
 
   return (
+    <AuthProvider baseUrl={baseUrl}>
     <div>
       <BrowserRouter>
         <Nav />
-
-        <ErrorNotification error={error} />
-
         <Routes>
-          <Route path="/construct" element={<Construct info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/create_account"
-            element={<Create info={launchInfo} />}
-          />
-        </Routes>
-
-        <Routes>
-          <Route path="/main" element={<Main info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/trending" element={<Trending info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/archive" element={<Archive info={launchInfo} />} />
-        </Routes>
-
-        <Routes>
-          <Route path="/about" element={<About info={launchInfo} />} />
+          <Route path="/construct" element={<Construct />} />
+          <Route path="/create_account" element={<Create />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/token" element={<TokenPage />} />
         </Routes>
       </BrowserRouter>
     </div>
+    </AuthProvider>
   );
 }
 
