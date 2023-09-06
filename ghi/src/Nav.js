@@ -1,39 +1,18 @@
-import React, {useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import useToken, { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useToken from '@galvanize-inc/jwtdown-for-react';
 import './Nav.css';
 
 
-function Nav() {
+function Nav({ currentUser, setCurrentUser }) {
     const { logout } = useToken();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
-        // window.location.reload();
+        setCurrentUser(null);
+        navigate("/login");
     }
-
-    const { token } = useAuthContext();
-    const [username, setUsername] = useState("")
-
-const fetchData = async () => {
-    try {
-    const url = "http://localhost:8000/token";
-    const response = await fetch(url, {
-        credentials: "include",
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setUsername(data.account.username)
-    } else {
-        console.log("Error fetching data");
-    }
-  } catch (error) {}
-};
-    useEffect(() => {
-        fetchData();
-    }, []);
 
 
     return (
@@ -45,8 +24,8 @@ const fetchData = async () => {
           height="100"
         />
 
-        {username ? (
-          <h1 className="token-user">Hello, {username}</h1>
+        {currentUser ? (
+          <h1 className="token-user">Hello, {currentUser}</h1>
         ) : (
           <h1 className="token-user">Please log in</h1>
         )}
@@ -64,23 +43,11 @@ const fetchData = async () => {
             <NavLink to="/home">Home</NavLink>
           </li>
 
-          {/* <li className='nav-item'>
-                    <NavLink to='/login'>Login</NavLink>
-                </li> */}
-
           <li className="nav-item">
-            <NavLink to="/token">Token</NavLink>
+            <NavLink to="/comment">Comments</NavLink>
           </li>
 
-          <li className="nav-item">
-            <NavLink to="/comment">Comment</NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink to="/about">About</NavLink>
-          </li>
-
-          {username ? (
+          {currentUser ? (
             <li className="nav-item">
               <NavLink to="/login" onClick={handleLogout}>
                 Logout
@@ -91,6 +58,10 @@ const fetchData = async () => {
               <NavLink to="/login">Login</NavLink>
             </li>
           )}
+
+          <li className="nav-item">
+            <NavLink to="/about">About</NavLink>
+          </li>
         </ul>
       </nav>
     );

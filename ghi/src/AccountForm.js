@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Form.css';
+import { useNavigate } from "react-router-dom"
 
 const AccountForm = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     username: '',
     password: '',
   });
 
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -45,8 +45,6 @@ const AccountForm = () => {
         setSuccess(true);
         setError(false);
         setFormData({
-          firstName: '',
-          lastName: '',
           email: '',
           username: '',
           password: '',
@@ -66,10 +64,14 @@ const AccountForm = () => {
     }
   };
 
+  useEffect(() => {
+  if (success || error) {
+    navigate("/login");
+  }
+}, [success, error, navigate]);
+
   return (
       <div>
-        {success && <div className="notification success">Account created successfully</div>}
-        {error && <div className="notification error">Account not created</div>}
     <h1 className='formHeader'> Create an Account </h1>
     <form onSubmit={handleSubmit}>
 
