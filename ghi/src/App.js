@@ -29,7 +29,6 @@ function App() {
           <Route path="/main" element={<Main currentUser={currentUser} />} />
           <Route path="/login" element={<Login setCurrentUser={setCurrentUser} currentUser={currentUser} />} />
           <Route path="/about" element={<About />} />
-          <Route path="/token" element={<TokenPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/comment" element={<Comment />} />
         </Routes>

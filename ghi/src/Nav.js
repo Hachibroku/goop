@@ -24,7 +24,6 @@ function Nav({ currentUser, setCurrentUser }) {
           height="100"
         />
 
-<<<<<<< HEAD
             {currentUser ? (
             <h1 className="token-user">Hello, {currentUser}</h1> ) : (
             <h1 className="token-user">Please log in</h1>
@@ -55,7 +54,7 @@ function Nav({ currentUser, setCurrentUser }) {
             <NavLink to="/about">About</NavLink>
           </li>
 
-          {username ? (
+          {currentUser ? (
             <li className="nav-item">
               <NavLink to="/login" onClick={handleLogout}>
                 Logout
