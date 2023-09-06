@@ -29,13 +29,7 @@ function Nav({ currentUser, setCurrentUser }) {
             <h1 className="token-user">Hello, {currentUser}</h1> ) : (
             <h1 className="token-user">Please log in</h1>
             )}
-=======
-        {username ? (
-          <h1 className="token-user">Hello, {username}</h1>
-        ) : (
-          <h1 className="token-user">Please log in</h1>
-        )}
->>>>>>> 2135313849f43f687d1123572f2823f03c0c23e6
+
 
         <ul>
           <li className="nav-item">
@@ -50,26 +44,12 @@ function Nav({ currentUser, setCurrentUser }) {
             <NavLink to="/main">Home</NavLink>
           </li>
 
-<<<<<<< HEAD
                 {currentUser ? (
                 <li className='nav-item'>
                     <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>
                 </li> ) : (  <li className='nav-item'>
                     <NavLink to='/login'>Login</NavLink>
                 </li> )}
-=======
-          {/* <li className='nav-item'>
-                    <NavLink to='/login'>Login</NavLink>
-                </li> */}
-
-          <li className="nav-item">
-            <NavLink to="/token">Token</NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink to="/comment">Comment</NavLink>
-          </li>
->>>>>>> 2135313849f43f687d1123572f2823f03c0c23e6
 
           <li className="nav-item">
             <NavLink to="/about">About</NavLink>
