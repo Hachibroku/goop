@@ -1,6 +1,7 @@
 import React from "react";
 import "./Cards.css";
 import CardItem from "./CardItem";
+import axios from "axios";
 
 function Cards() {
   return (
@@ -10,10 +11,7 @@ function Cards() {
         <div className="cards__wrapper">
           <ul className="cards__items">
             <CardItem
-              src="Murpheyimage.png"
-              text="Explore my dribbble profile where underlying are my illustrations and more"
-              label="Adventure"
-              path=""
+
             />
             <CardItem
               src="Murpheyimage.png"
