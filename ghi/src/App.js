@@ -8,7 +8,7 @@ import TokenPage from "./TokenPage";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 // import ErrorNotification from "./ErrorNotification";
 import "./App.css";
-import Main from "./components/Mainpage/Main";
+import Home from "./components/Mainpage/Home";
 import Comment from "./components/comments/Comments";
 import AccountPage from "./AccountPage";
 
@@ -41,20 +41,20 @@ function App() {
 
   return (
     <AuthProvider baseUrl={baseUrl}>
-    <div>
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path="/create_account" element={<Create />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/token" element={<TokenPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/comment" element={<Comment />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+      <div>
+        <BrowserRouter>
+          <Nav />
+          <Routes>
+            <Route path="/create_account" element={<Create />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/token" element={<TokenPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/comment" element={<Comment />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </AuthProvider>
   );
 }

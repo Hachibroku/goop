@@ -1,10 +1,10 @@
 import React from "react";
-import "./Main.css";
+import "./Home.css";
 import Cards from "./Cards";
 import TopicSection from "./TopicSection";
 import Footer from "./Footer";
 
-function Main() {
+function Home() {
   return (
     <>
       <TopicSection />
@@ -15,4 +15,4 @@ function Main() {
 }
 
 
-export default Main;
+export default Home;

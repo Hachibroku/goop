@@ -173,3 +173,14 @@ async def delete_comment(
 ):
     comment_queries.delete_comment(topic_id, user_id)
     return {"message": "Comment deleted successfully."}
+
+
+@router.get("/api/topics", response_model=List[TopicOut] | HttpError)
+async def get_all_topics(topics_queries: TopicQueries = Depends()):
+    try:
+        all_topics = topics_queries.get_all_topics()
+        return all_topics
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )

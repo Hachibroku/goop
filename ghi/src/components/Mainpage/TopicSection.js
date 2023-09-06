@@ -1,5 +1,5 @@
-import { Button } from "./Button";
-import { Link } from "react-router-dom";
+// import { Button } from "./Button";
+// import { Link } from "react-router-dom";
 import "./TopicSection.css";
 import React, { useEffect, useState } from "react";
 
@@ -10,10 +10,11 @@ function TopicSection() {
   async function loadTopics() {
     const url = "http://localhost:8000/api/topics";
     const response = await fetch(url);
+    console.log(response)
     if (response.ok) {
       const data = await response.json();
       setTopics(data);
-      console.log(data);
+      console.log("here is our data",data);
     }
   }
 
@@ -23,6 +24,7 @@ function TopicSection() {
 
   return (
     <>
+    <h1>HELLO WORLD</h1>
       <div className="row">
         {topics?.map((topic) => (
           <div
