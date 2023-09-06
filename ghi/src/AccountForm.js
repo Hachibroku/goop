@@ -55,7 +55,7 @@ const AccountForm = () => {
         setError(true);
 
         if (responseData && responseData.error) {
-          // console.log('Error:', responseData.error);
+          console.log('Error:', responseData.error);
         }
 
       }

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
 from typing import List
-from queries.topics import TopicQueries
+from queries.topics import TopicQueries, VotingQueries, CommentQueries
 from models.topics import TopicIn, TopicOut, Voting
 
 
@@ -17,7 +17,7 @@ async def create_topic(
     topic: TopicIn, topics_queries: TopicQueries = Depends()
 ):
     try:
-        created_topic = topics_queries.create(topic)
+        created_topic = topics_queries.create_topic(topic)
         return created_topic
     except Exception as e:
         raise HTTPException(
@@ -74,10 +74,10 @@ async def record_vote(
     topic_id: str,
     user_id: str,
     vote_type: str,
-    topics_queries: TopicQueries = Depends(),
+    voting_queries: VotingQueries = Depends(),
 ):
     try:
-        topics_queries.record_vote(topic_id, user_id, vote_type)
+        voting_queries.record_vote(topic_id, user_id, vote_type)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -86,10 +86,10 @@ async def record_vote(
 
 @router.get("/api/topics/{topic_id}/voting", response_model=Voting | HttpError)
 async def get_voting_data_by_topic_id(
-    topic_id: str, topics_queries: TopicQueries = Depends()
+    topic_id: str, voting_queries: VotingQueries = Depends()
 ):
     try:
-        voting_data = topics_queries.get_voting_data(topic_id)
+        voting_data = voting_queries.get_voting_data(topic_id)
         return voting_data
     except ValueError as e:
         raise HTTPException(
@@ -104,10 +104,10 @@ async def update_user_vote(
     topic_id: str,
     user_id: str,
     vote_type: str,
-    topics_queries: TopicQueries = Depends(),
+    voting_queries: VotingQueries = Depends(),
 ):
     try:
-        topics_queries.update_vote(topic_id, user_id, vote_type)
+        voting_queries.update_vote(topic_id, user_id, vote_type)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -122,10 +122,10 @@ async def update_user_vote(
 async def delete_user_vote(
     topic_id: str,
     user_id: str,
-    topics_queries: TopicQueries = Depends(),
+    voting_queries: VotingQueries = Depends(),
 ):
     try:
-        topics_queries.delete_vote(topic_id, user_id)
+        voting_queries.delete_vote(topic_id, user_id)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -138,9 +138,9 @@ async def add_comment_to_topic(
     topic_id: str,
     user_id: str = Query(...),
     content: str = Query(...),
-    topics_queries: TopicQueries = Depends(),
+    comment_queries: CommentQueries = Depends(),
 ):
-    topics_queries.add_comment(topic_id, user_id, content)
+    comment_queries.add_comment(topic_id, user_id, content)
     return {"message": "Comment added successfully."}
 
 
@@ -148,9 +148,9 @@ async def add_comment_to_topic(
 async def get_comments(
     topic_id: str = None,
     user_id: str = None,
-    topics_queries: TopicQueries = Depends(),
+    comment_queries: CommentQueries = Depends(),
 ):
-    comments = topics_queries.get_comments(user_id=user_id, topic_id=topic_id)
+    comments = comment_queries.get_comments(user_id=user_id, topic_id=topic_id)
     return {"comments": comments}
 
 
@@ -159,9 +159,9 @@ async def update_comment(
     topic_id: str,
     user_id: str = Query(...),
     new_content: str = Query(...),
-    topics_queries: TopicQueries = Depends(),
+    comment_queries: CommentQueries = Depends(),
 ):
-    topics_queries.update_comment(topic_id, user_id, new_content)
+    comment_queries.update_comment(topic_id, user_id, new_content)
     return {"message": "Comment updated successfully."}
 
 
@@ -169,7 +169,7 @@ async def update_comment(
 async def delete_comment(
     topic_id: str,
     user_id: str = Query(...),
-    topics_queries: TopicQueries = Depends(),
+    comment_queries: CommentQueries = Depends(),
 ):
-    topics_queries.delete_comment(topic_id, user_id)
+    comment_queries.delete_comment(topic_id, user_id)
     return {"message": "Comment deleted successfully."}

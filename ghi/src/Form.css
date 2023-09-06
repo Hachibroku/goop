@@ -62,7 +62,6 @@ button[type="button"] {
   font-size: 14px;
 }
 
-
 button[type="button"]:focus {
   outline: none;
 }
