@@ -6,7 +6,6 @@ import Create from "./AccountForm";
 import Main from "./MainPage";
 =======
 import About from "./About";
->>>>>>> 2135313849f43f687d1123572f2823f03c0c23e6
 import Login from "./Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
@@ -39,7 +38,6 @@ function App() {
           <Route path="/token" element={<TokenPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/comment" element={<Comment />} />
->>>>>>> 2135313849f43f687d1123572f2823f03c0c23e6
         </Routes>
       </BrowserRouter>
     </div>
