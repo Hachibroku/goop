@@ -34,6 +34,13 @@ class TopicQueries(Queries):
             single_topic.append(TopicOut(**document))
         return single_topic
 
+    def get_all_topics(self) -> List[TopicOut]:
+        topics = []
+        for document in self.collection.find():
+            document["id"] = str(document["_id"])
+            topics.append(TopicOut(**document))
+        return topics
+
     def update_topic(self, topic_id: str, updated_topic: TopicIn) -> TopicOut:
         topic_id = ObjectId(topic_id)
         result = self.collection.update_one(
