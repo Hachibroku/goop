@@ -54,6 +54,13 @@ class TopicQueries(Queries):
                 detail=f"Topic with id {topic_id} not found",
             )
 
+    def get_all_topics(self) -> List[TopicOut]:
+        topics = []
+        for document in self.collection.find():
+            document["id"] = str(document["_id"])
+            topics.append(TopicOut(**document))
+        return topics
+
 
 class VotingQueries(Queries):
     DB_NAME = "module3-project-gamma-mongo"

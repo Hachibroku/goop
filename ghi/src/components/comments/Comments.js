@@ -94,3 +94,8 @@ const Comments = ({ currentUserId }) => {
 };
 
 export default Comments;
+
+
+// GET
+// /api/topics/{title}
+// Get Topic By Title
