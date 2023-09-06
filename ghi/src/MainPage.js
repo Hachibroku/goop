@@ -1,21 +1,25 @@
-function MainPage() {
+import React, {useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import useToken, { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
+import { AuthProvider } from './AuthContext';
+
+
+function MainPage({ currentUser }) {
+  useEffect(() => {
+
+  })
+
   return (
+    <AuthProvider>
     <div className="App">
       <header className="App-header">
         <h1>
-            Under construction
+            If you are seeing this page, {currentUser} is logged in.
         </h1>
-        <h2>
-            The BEST app ever
-        </h2>
-        <h2>
-          Way better than Jesse's group's app
-        </h2>
-        <h6>
-            Haha yeah he sucks 😛
-        </h6>
+
       </header>
     </div>
+    </AuthProvider>
   );
 }
 
