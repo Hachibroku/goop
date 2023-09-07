@@ -1,8 +1,7 @@
-// import { Button } from "./Button";
+import { Button } from "./Button";
 // import { Link } from "react-router-dom";
 import "./TopicSection.css";
 import React, { useEffect, useState } from "react";
-
 
 function TopicSection() {
   const [topics, setTopics] = useState([]);
@@ -24,27 +23,44 @@ function TopicSection() {
 
   return (
     <>
-    <h1>HELLO WORLD</h1>
-      <div className="row">
-        {topics?.map((topic) => (
-          <div
-            key={topic.id}
-            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 mx-5"
-          >
-            <a key={topic.id} href={`/api/topics${topic.id}`}>
-              <div key={topic.id} className="card " style={{ width: "18rem" }}>
-                <img src={topic.image_url} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">{topic.title}</h5>
-                  <p className="card-text text-decoration-none">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                </div>
-              </div>
-            </a>
+      <div>
+        {topics.map((topic) => (
+          <div className="topic-container">
+            <img className="img-box" src={topic.image_url} />
+            <div className="text-title">{topic.title}</div>
+
+            <div className="text-description">
+              {topic.description}
+            </div>
           </div>
         ))}
+      </div>
+      <div className="buttons">
+        <Button
+          className="btns"
+          buttonStyle="btn--outline"
+          buttonSize="btn--large"
+        >
+          AGREE
+        </Button>
+      {/* </div>
+      <div className="disagree"> */}
+        <Button
+          className="btns"
+          buttonStyle="btn--outline"
+          buttonSize="btn--large"
+        >
+          DISAGREE
+        </Button>
+      {/* </div>
+      <div className="vote-here"> */}
+        <Button
+          className="btns"
+          buttonStyle="btn--outline"
+          buttonSize="btn--large"
+        >
+          VOTE HERE
+        </Button>
       </div>
     </>
   );
@@ -85,3 +101,34 @@ export default TopicSection;
 // }
 
 // export default TopicSection;
+
+
+
+
+
+      //   {topics?.map((topic) => (
+      //     <div
+      //       key={topic.id}
+      //       className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 mx-5"
+      //     >
+      //       <a key={topic.id} href={`/api/topics${topic.id}`}>
+      //         <div key={topic.id} className="card " style={{ width: "18rem" }}>
+      //           <img src={topic.image_url} className="card-img-top" alt="..." />
+      //           <div className="card-body">
+      //             <h5 className="card-title">{topic.title}</h5>
+      //             <p className="card-text text-decoration-none">
+      //               Some quick example text to build on the card title and make
+      //               up the bulk of the card's content.
+      //             </p>
+      //           </div>
+      //         </div>
+      //       </a>
+      //     </div>
+      //   ))}
+      // </div>
+
+
+
+      // <h5 className="card-title">
+      //   {topic.title} , {topic.id}
+      // </h5>;

@@ -61,6 +61,23 @@ class TopicQueries(Queries):
             topics.append(TopicOut(**document))
         return topics
 
+    def get_topic_of_the_day(self) -> TopicOut:
+        unused_topics = list(
+            self.collection.find({"used_as_topic_of_the_day": False})
+        )
+        if not unused_topics:
+            raise HTTPException(
+                status_code=404, detail="No unused topics found"
+            )
+        chosen_topic = random.choice(unused_topics)
+        chosen_topic_id = chosen_topic["_id"]
+        self.collection.update_one(
+            {"_id": chosen_topic_id},
+            {"$set": {"used_as_topic_of_the_day": True}},
+        )
+        chosen_topic["id"] = str(chosen_topic_id)
+        return TopicOut(**chosen_topic)
+
 
 class VotingQueries(Queries):
     DB_NAME = "module3-project-gamma-mongo"

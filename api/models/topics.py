@@ -6,6 +6,7 @@ class TopicIn(BaseModel):
     title: str
     image_url: str
     description: str
+    used_as_topic_of_the_day: bool = False
 
 
 class Comment(BaseModel):
@@ -26,6 +27,7 @@ class TopicOut(BaseModel):
     description: str
     voting: Optional[Voting]
     comments: Optional[List[Comment]] = []
+    used_as_topic_of_the_day: bool
 
 
 class SearchTopicOut(BaseModel):
