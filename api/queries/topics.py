@@ -34,6 +34,13 @@ class TopicQueries(Queries):
             single_topic.append(TopicOut(**document))
         return single_topic
 
+    def get_topic_by_id(self, topic_id: str) -> TopicOut:
+        document = self.collection.find_one({"_id": ObjectId(topic_id)})
+        if not document:
+            raise HTTPException(status_code=404, detail="Topic not found")
+        document["id"] = str(document["_id"])
+        return TopicOut(**document)
+
     def get_all_topics(self) -> List[TopicOut]:
         topics = []
         for document in self.collection.find():

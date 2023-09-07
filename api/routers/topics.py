@@ -25,6 +25,21 @@ async def create_topic(
         )
 
 
+@router.get("/api/topic/{topic_id}", response_model=TopicOut | HttpError)
+async def get_topic_by_id(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        topic = topics_queries.get_topic_by_id(topic_id)
+        return topic
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
 @router.get("/api/topics/{title}", response_model=List[TopicOut] | HttpError)
 async def get_topic_by_title(
     title: str, topics_queries: TopicQueries = Depends()

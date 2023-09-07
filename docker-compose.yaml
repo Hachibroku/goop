@@ -31,7 +31,7 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_API_HOST: http://fastapi:8000
       REACT_APP_SIGNING_KEY: f4swFgF4563DFG4348dpGazG45egdfggdFg9fGH5
 
   mongo:
