@@ -19,19 +19,6 @@ app.add_middleware(
 )
 
 
-@app.get("/api/launch-details")
-def launch_details():
-    return {
-        "launch_details": {
-            "module": 3,
-            "week": 17,
-            "day": 5,
-            "hour": 19,
-            "min": "00",
-        }
-    }
-
-
 MONGODB_URL = "mongodb://murph:password@db:27017"
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGODB_URL)
 database = client.mydatabase
