@@ -14,7 +14,7 @@ db.topics.insertMany([
       disagree_count: 0,
     },
     comments: [],
-    used_as_topic_of_the_day: false,
+    // used_as_topic_of_the_day: false,
   },
   {
     title: "Fromsoft Growth",
@@ -28,7 +28,7 @@ db.topics.insertMany([
       disagree_count: 0,
     },
     comments: [],
-    used_as_topic_of_the_day: false,
+    // used_as_topic_of_the_day: false,
   },
   {
     title: "Baldurs Gate 3",
@@ -41,7 +41,7 @@ db.topics.insertMany([
       disagree_count: 0,
     },
     comments: [],
-    used_as_topic_of_the_day: false,
+    // used_as_topic_of_the_day: false,
   },
   {
     title: "Witcher 3",
@@ -55,7 +55,7 @@ db.topics.insertMany([
       disagree_count: 0,
     },
     comments: [],
-    used_as_topic_of_the_day: false,
+    // used_as_topic_of_the_day: false,
   },
   {
     title: "Ubisoft",
@@ -68,6 +68,6 @@ db.topics.insertMany([
       disagree_count: 0,
     },
     comments: [],
-    used_as_topic_of_the_day: false,
+    // used_as_topic_of_the_day: false,
   },
 ]);
