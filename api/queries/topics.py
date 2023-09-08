@@ -77,7 +77,6 @@ class TopicQueries(Queries):
         unused_topics = list(
             self.collection.find({"used_as_topic_of_the_day": False})
         )
-
         if not unused_topics:
             raise HTTPException(
                 status_code=404, detail="No unused topics found"
@@ -90,7 +89,6 @@ class TopicQueries(Queries):
             {"_id": chosen_topic_id},
             {"$set": {"used_as_topic_of_the_day": True}},
         )
-
         chosen_topic["id"] = str(chosen_topic_id)
         return TopicOut(**chosen_topic)
 

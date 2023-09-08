@@ -1,6 +1,5 @@
 .topic-container {
-  background: url('/public/images/img-home.jpg');
-  top: 0;
+  position: relative;
   height: 800px;
   width: 100%;
   display: flex;
@@ -12,14 +11,12 @@
 }
 
 .topic-container > h1 {
-  color: #fff;
+  color: #ffffff;
   font-size: 100%;
-  margin-top: -100px;
 }
 
 /* this is the p tage for the topic description */
 .topic-container > p {
-  margin-top: 8px;
   color: #fff;
   font-size: 32px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -32,4 +29,29 @@
 
 .topic-btns .btn {
   margin: 60px;
+}
+
+.img-box {
+  height: 100%;
+  width: 100%;
+}
+
+.topic-container .text-title{
+  position: absolute;
+  color: white;
+  left: 45%;
+  bottom: 90%;
+  font-size: xx-large;
+}
+
+.topic-container .text-description{
+  position: absolute;
+  color: white;
+  top: 40%;
+  font-size: xx-large;
+  border: 3px solid #8E44AD ;
+  align-content: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10px;
 }

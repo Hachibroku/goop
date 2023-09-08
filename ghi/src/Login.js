@@ -1,22 +1,54 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './Form.css'
+import { useNavigate } from "react-router-dom"
 
-const Login = () => {
+const Login = ({ setCurrentUser, currentUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useToken();
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const getUsername = async (email) => {
+    try {
+      const url = `http://localhost:8000/api/accounts/${email}`;
+      const response = await fetch(url, {
+        credentials: "include",
+      });
+
+       if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setCurrentUser(data.username)
+      } else {
+        console.log("Error fetching data");
+      }
+      } catch (error) {console.log(error)}
+    };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password);
-    e.target.reset();
+    try {
+      await login(username, password); // Wait for the login process to complete
+      await getUsername(username);
+      e.target.reset();
+      setLoginSuccess(true); // Set login success to true
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+
+  useEffect(() => {
+    loginSuccess && currentUser && navigate("/main");
+  }, [loginSuccess, currentUser, navigate]);
 
   return (
     <div>
