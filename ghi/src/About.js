@@ -84,7 +84,7 @@ function AboutSection() {
             <div className="container">
               <h3>Luis Santana</h3>
               <p className="title">Full-Stack Developer</p>
-              <p className="title">Designer</p>
+              <p className="title">Front-End Designer</p>
               <p>Some text that describes me lorem ipsum ipsum lorem.</p>
               <p>Luis_Santana@email.com</p>
               <p>

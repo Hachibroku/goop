@@ -184,3 +184,13 @@ async def get_all_topics(topics_queries: TopicQueries = Depends()):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
         )
+
+
+@router.get("/api/topic-of-the-day", response_model=TopicOut | HttpError)
+async def get_topic_of_the_day(topics_queries: TopicQueries = Depends()):
+    try:
+        return topics_queries.get_topic_of_the_day()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )
