@@ -1,35 +1,71 @@
-import { Button } from "./Button";
-import "./TopicSection.css";
 import React, { useEffect, useState } from "react";
+import { Button } from "./Button";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode"; // Usually, jwt_decode is imported from 'jwt-decode'
 
 function TopicSection() {
   const [topic, setTopics] = useState(null);
-
-  async function loadTopics() {
-    const url = "http://localhost:8000/api/topic-of-the-day";
-    const response = await fetch(url);
-    console.log(response)
-    if (response.ok) {
-      const data = await response.json();
-      setTopics(data);
-      console.log("here is our data",data);
-    }
-  }
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Extract JWT and decode to find user ID
+    const jwt = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("yourCookieName="));
+    if (jwt) {
+      const decodedJwt = jwt_decode(jwt.split("=")[1]);
+      setUserId(decodedJwt.id); // assuming 'id' is the field in payload
+    }
+
+    // Load initial topics
     loadTopics();
   }, []);
 
+  const loadTopics = async () => {
+    const url = "http://localhost:8000/api/topic-of-the-day";
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      setTopics(data);
+    }
+  };
+
+  const handleAgreeClick = () => {
+    recordVote("agree");
+  };
+
+  const handleDisagreeClick = () => {
+    recordVote("disagree");
+  };
+
+  const recordVote = async (voteType) => {
+    if (topic && topic.id && userId) {
+      const url = `http://localhost:8000/api/topics/${topic.id}/vote`;
+      const payload = {
+        user_id: userId,
+        vote_type: voteType,
+      };
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        navigate(`/comment/${topic.id}`);
+      }
+    }
+  };
+
   return (
     <>
-      <div>
-        {topic &&(
+      <div onClick={() => navigate(`/topics/${topic?.id}`)}>
+        {topic && (
           <div className="topic-container">
             <img className="img-box" src={topic.image_url} alt={topic.title} />
             <div className="text-title">{topic.title}</div>
-            <div className="text-description">
-              {topic.description}
-            </div>
+            <div className="text-description">{topic.description}</div>
           </div>
         )}
       </div>
@@ -38,31 +74,21 @@ function TopicSection() {
           className="btns"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
+          onClick={handleAgreeClick}
         >
           AGREE
         </Button>
-      {/* </div>
-      <div className="disagree"> */}
         <Button
           className="btns"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
+          onClick={handleDisagreeClick}
         >
           DISAGREE
-        </Button>
-      {/* </div>
-      <div className="vote-here"> */}
-        <Button
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-        >
-          VOTE HERE
         </Button>
       </div>
     </>
   );
 }
-
 
 export default TopicSection;

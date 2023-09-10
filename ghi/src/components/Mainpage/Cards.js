@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./Cards.css";
 import CardItem from "./CardItem";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Cards() {
   const [topics, setTopics] = useState([]);
+  const navigate = useNavigate();
 
   async function loadTopics() {
     const url = "http://localhost:8000/api/topics";
@@ -21,21 +23,30 @@ function Cards() {
     loadTopics();
   }, []);
 
-    return (
+  function goToTopicDetail(topicId) {
+    navigate(`/comments/${topicId}`);
+  }
+
+  return (
     <div className="cards">
       <h1>Catch up with previous topics!</h1>
       <div className="cards__container">
         {topics.length > 0 && (
           <div className="cards__wrapper">
             {topics.map((topic, index) => (
-              <ul className="cards__items" key={index}>
-                <Link to={`/topics/${topic.id}`}></Link>
-                <CardItem
-                  src={topic.image_url}
-                  text={topic.description}
-                  label={topic.title}
-                  path={`/topics/${topic.id}`}
-                />
+              <ul
+                className="cards__items"
+                key={index}
+                onClick={() => goToTopicDetail(topic.id)}
+              >
+                <Link to={`/comment/${topic.id}`}>
+                  <CardItem
+                    src={topic.image_url}
+                    text={topic.description}
+                    label={topic.title}
+                    path={`/comment/${topic.id}`}
+                  />
+                </Link>
               </ul>
             ))}
           </div>
@@ -44,56 +55,4 @@ function Cards() {
     </div>
   );
 }
-
 export default Cards;
-
-
-
-//   return (
-//     <div className="cards">
-//       <h1>Catch up with previous topics!</h1>
-//       <div className="cards__container">
-//         {topics &&(
-//           <div className="cards__wrapper">
-//             <ul className="cards__items">
-//               <CardItem
-//                 src={topics.image_url}
-//                 text={topics.description}
-//                 label={topics.title}
-//                 path=""
-//               />
-//               <CardItem
-//                 src={topics.image_url}
-//                 text={topics.description}
-//                 label={topics.title}
-//                 path=""
-//               />
-//             </ul>
-//             <ul className="cards__items">
-//               <CardItem
-//                 src={topics.image_url}
-//                 text={topics.description}
-//                 label={topics.title}
-//                 path=""
-//               />
-//               <CardItem
-//                 src={topics.image_url}
-//                 text={topics.description}
-//                 label={topics.title}
-//                 path=""
-//               />
-//               <CardItem
-//                 src={topics.image_url}
-//                 text={topics.description}
-//                 label={topics.title}
-//                 path=""
-//               />
-//             </ul>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Cards;
