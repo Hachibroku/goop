@@ -1,4 +1,30 @@
-.comments {
+.comments-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-content {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* .comments {
   color: rgb(255, 255, 255);
 }
 
@@ -116,4 +142,4 @@
   color: rgb(0, 0, 0);
   background: rgb(255, 255, 255);
   border-radius: 20px 20px 20px 20px;
-}
+} */
