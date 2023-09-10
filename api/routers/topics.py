@@ -38,6 +38,21 @@ async def get_topic_by_title(
         )
 
 
+@router.get(
+    "/api/topics/{topic_id}/by_id", response_model=List[TopicOut] | HttpError
+)
+async def get_topic_by_id(
+    topic_id: str, topics_queries: TopicQueries = Depends()
+):
+    try:
+        topic = topics_queries.get_topic(topic_id, by="id")
+        return topic
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+        )
+
+
 @router.put("/api/topics/{topic_id}", response_model=TopicOut | HttpError)
 async def update_topic(
     topic_id: str,

@@ -1,9 +1,11 @@
 from fastapi import HTTPException, status
 from .client import Queries
 from models.topics import TopicIn, TopicOut, Voting, Comment
+from queries.accounts import AccountQueries
 from bson import ObjectId
 from typing import List
 import random
+
 
 class DuplicateTopicError(ValueError):
     pass
@@ -22,9 +24,17 @@ class TopicQueries(Queries):
         props["id"] = str(props["_id"])
         return TopicOut(**props)
 
-    def get_topic(self, title: str) -> List[TopicOut]:
+    def get_topic(self, identifier: str, by: str = "title") -> List[TopicOut]:
         single_topic = []
-        document = self.collection.find_one({"title": title})
+
+        query = (
+            {"title": identifier}
+            if by == "title"
+            else {"_id": ObjectId(identifier)}
+        )
+
+        document = self.collection.find_one(query)
+
         if document:
             document["id"] = str(document["_id"])
             single_topic.append(TopicOut(**document))
@@ -253,6 +263,7 @@ class CommentQueries(Queries):
 
     def get_comments(self, user_id: str = None, topic_id: str = None):
         query = {}
+        account_queries = AccountQueries()
         if user_id:
             query["comments.user_id"] = user_id
         if topic_id:
@@ -264,7 +275,11 @@ class CommentQueries(Queries):
         all_comments = []
         for topic in topics_with_comments:
             comments = topic.get("comments", [])
-            all_comments.extend(comments)
+            for comment_data in comments:
+                user = account_queries.get_by_id(comment_data["user_id"])
+                if user is not None:
+                    comment_data["username"] = user.username
+                all_comments.append(Comment(**comment_data))
 
         return all_comments
 
