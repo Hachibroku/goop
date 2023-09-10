@@ -1,7 +1,7 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
-import './Form.css'
-import { useNavigate } from "react-router-dom"
+import "./Form.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setCurrentUser, currentUser }) => {
   const [username, setUsername] = useState("");
@@ -18,16 +18,17 @@ const Login = ({ setCurrentUser, currentUser }) => {
         credentials: "include",
       });
 
-       if (response.ok) {
+      if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setCurrentUser(data.username)
+        setCurrentUser(data.username);
       } else {
         console.log("Error fetching data");
       }
-      } catch (error) {console.log(error)}
-    };
-
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ const Login = ({ setCurrentUser, currentUser }) => {
       e.target.reset();
       setLoginSuccess(true); // Set login success to true
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     }
   };
 
@@ -45,31 +46,34 @@ const Login = ({ setCurrentUser, currentUser }) => {
     setShowPassword(!showPassword);
   };
 
-
   useEffect(() => {
-    loginSuccess && currentUser && navigate("/main");
+    loginSuccess && currentUser && navigate("/home");
   }, [loginSuccess, currentUser, navigate]);
 
   return (
     <div>
-      <h1 className='formHeader'>Login</h1>
+      <h1 className="formHeader">Login</h1>
       <div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="div-login">
             <label className="label-login">Email:</label>
             <input
-              name="username" type="text" className="input-login"
+              name="username"
+              type="text"
+              className="input-login"
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="div-login">
             <label className="label-login">Password:</label>
             <input
-              name="password" type={showPassword ? 'text' : 'password'} className="input-login"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              className="input-login"
               onChange={(e) => setPassword(e.target.value)}
             />
             <button type="button" onClick={togglePasswordVisibility}>
-                   {showPassword ? 'Hide' : 'Show'} Password
+              {showPassword ? "Hide" : "Show"} Password
             </button>
           </div>
           <div>
