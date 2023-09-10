@@ -10,6 +10,7 @@ class TopicIn(BaseModel):
 
 class Comment(BaseModel):
     user_id: str
+    username: str = None
     content: str = Field(..., max_length=140)
 
 
