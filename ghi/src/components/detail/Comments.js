@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./Comments.css";
 
-function Comments() {
+function Comments(currentUser) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { topicId } = useParams(); // Retrieve topicId from URL params
