@@ -5,6 +5,7 @@ import "./Comments.css";
 
 function Comments() {
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
   const { topicId } = useParams(); // Retrieve topicId from URL params
 
   useEffect(() => {
@@ -23,16 +24,59 @@ function Comments() {
     fetchComments();
   }, [topicId]); // Run this effect whenever topicId changes
 
+  const handlePostComment = async () => {
+    try {
+      const response = await fetch("/api/topics/topic_id/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: currentUser,
+          content: newComment,
+        }),
+      });
+
+      if (response.ok) {
+        // Reload comments or append the new comment to the list
+        const updatedComments = [
+          ...comments,
+          { username: currentUser, content: newComment },
+        ];
+        setComments(updatedComments);
+        setNewComment(""); // clear the text field
+      } else {
+        // Handle error
+        console.error("Failed to post comment");
+      }
+    } catch (error) {
+      console.error("There was an error posting the comment", error);
+    }
+  };
+
   return (
-    <div className="comments-container">
-      <h2>Comments</h2>
-      <ul>
+    <div className="comment-section">
+      {/* Section for posting a new comment */}
+      <div className="new-comment">
+        <h2>Post a Comment</h2>
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Write your comment here..."
+        ></textarea>
+        <button onClick={handlePostComment}>Post Comment</button>
+      </div>
+
+      {/* Section for displaying existing comments */}
+      <div className="existing-comments">
+        <h2>Existing Comments</h2>
         {comments.map((comment, index) => (
-          <li key={index} className="comment">
-            <div className="comment-content">{comment.content}</div>
-          </li>
+          <div key={index} className="single-comment">
+            <h3>{comment.username}</h3>
+            <p>{comment.content}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

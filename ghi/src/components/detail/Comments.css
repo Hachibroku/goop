@@ -1,27 +1,55 @@
-.comments-container {
+/* Container for the entire comments section */
+.comment-section {
+  width: 100%;
   margin: 20px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #ffffff;
 }
 
-.comment {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
+/* Style for posting a new comment */
+.new-comment {
+  margin-bottom: 20px;
+}
+
+.new-comment textarea {
+  width: 100%;
+  min-height: 100px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.comment-author {
-  font-weight: bold;
+.new-comment button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.comment-content {
-  font-size: 14px;
-  line-height: 1.4;
+/* Style for displaying existing comments */
+.existing-comments {
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+.single-comment {
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.single-comment h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.single-comment p {
+  margin: 5px 0;
+  color: #ffffff;
 }
 
 /* .comments {
