@@ -78,13 +78,6 @@ class TopicQueries(Queries):
                 detail=f"Topic with id {topic_id} not found",
             )
 
-    def get_all_topics(self) -> List[TopicOut]:
-        topics = []
-        for document in self.collection.find():
-            document["id"] = str(document["_id"])
-            topics.append(TopicOut(**document))
-        return topics
-
     # def get_topic_of_the_day(self) -> TopicOut:
     #     unused_topics = list(
     #         self.collection.find({"used_as_topic_of_the_day": False})
