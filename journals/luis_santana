@@ -1,0 +1,6 @@
+August 14(Mon) and 15(Tue): Group programmed, created a mongo db and connected endpoint in FastAPI to GET list of data
+August 15(Wed) and 16(Thurs): Began work in react setting up About.js + About.css
+August 21(Mon) to 23(Wed): Component folder for Mainpage and comment section portion both .js and .css
+August 24(Thur) to August 29 (Tue): Continuation of component folder for mainpage
+August 30(Wed) to Sept 5 (Tue): Majority of HTML and CSS tweaking to render pages with desired layout
+Sept 6(Wed) to Sept 11 (Mon): Final touches on component pages, updated README.md for description and introduction to the project.
