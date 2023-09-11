@@ -37,10 +37,6 @@ function Nav({ currentUser, setCurrentUser }) {
           <NavLink to="/home">Home</NavLink>
         </li>
 
-        <li className="nav-item">
-          <NavLink to="/comment">Comments</NavLink>
-        </li>
-
         {currentUser ? (
           <li className="nav-item">
             <NavLink to="/login" onClick={handleLogout}>
