@@ -6,7 +6,7 @@ import About from "./About";
 import Login from "./Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
-import Home from "./components/mainpage/Home";
+import Home from "./components/Mainpage/Home";
 import Detail from "./components/detail/Detail";
 import AccountPage from "./AccountPage";
 
@@ -23,18 +23,11 @@ function App() {
           <Routes>
             <Route path="/create_account" element={<Create />} />
             <Route path="/home" element={<Home />} />
-            <Route
-              path="/login"
-              element={
-                <Login
-                  setCurrentUser={setCurrentUser}
-                  currentUser={currentUser}
-                />
-              }
+            <Route path="/login" element={<Login setCurrentUser={setCurrentUser} currentUser={currentUser} />}
             />
             <Route path="/about" element={<About />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/comments/:topicId" element={<Detail />} />
+            <Route path="/comments/:topicId" element={<Detail currentUser={currentUser}/>} />
           </Routes>
         </BrowserRouter>
       </div>

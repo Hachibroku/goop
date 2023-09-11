@@ -7,6 +7,7 @@ function Comments({ currentUser }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { topicId } = useParams();
+
   useEffect(() => {
     async function fetchComments() {
       try {
@@ -31,12 +32,15 @@ function Comments({ currentUser }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            topic_id: topicId,
             username: currentUser,
             content: newComment,
           }),
         }
       );
-
+        console.log("topic_id:", topicId)
+        console.log("username:", currentUser)
+        console.log("comment:", newComment)
       if (response.ok) {
         const updatedComments = [
           ...comments,

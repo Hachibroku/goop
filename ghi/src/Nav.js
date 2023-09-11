@@ -40,7 +40,7 @@ function Nav({ currentUser, setCurrentUser }) {
           </li>
 
           <li className="nav-item">
-            <NavLink to="/main">Main</NavLink>
+            <NavLink to="/home">Home</NavLink>
           </li>
 
           <li className="nav-item">
