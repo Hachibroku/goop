@@ -40,6 +40,20 @@ class TopicQueries(Queries):
             single_topic.append(TopicOut(**document))
         return single_topic
 
+    def get_topic_by_id(self, topic_id: str) -> TopicOut:
+        document = self.collection.find_one({"_id": ObjectId(topic_id)})
+        if not document:
+            raise HTTPException(status_code=404, detail="Topic not found")
+        document["id"] = str(document["_id"])
+        return TopicOut(**document)
+
+    def get_all_topics(self) -> List[TopicOut]:
+        topics = []
+        for document in self.collection.find():
+            document["id"] = str(document["_id"])
+            topics.append(TopicOut(**document))
+        return topics
+
     def update_topic(self, topic_id: str, updated_topic: TopicIn) -> TopicOut:
         topic_id = ObjectId(topic_id)
         result = self.collection.update_one(
@@ -97,6 +111,10 @@ class TopicQueries(Queries):
         chosen_topic["id"] = str(chosen_topic_id)
         chosen_topic["id"] = str(chosen_topic_id)
         return TopicOut(**chosen_topic)
+        # self.collection.update_one(
+        #     {"_id": chosen_topic_id},
+        #     {"$set": {"used_as_topic_of_the_day": True}},
+        # )
 
 
 class VotingQueries(Queries):

@@ -4,3 +4,4 @@ uvicorn[standard]==0.17.6
 pymongo[srv]==4.2.0
 pytest
 motor
+pytest-mock
