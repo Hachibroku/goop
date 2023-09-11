@@ -13,6 +13,7 @@ class CommentRequest(BaseModel):
     username: str
     content: str
 
+
 router = APIRouter()
 
 

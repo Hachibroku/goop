@@ -15,7 +15,6 @@
   font-size: 100%;
 }
 
-/* this is the p tage for the topic description */
 .topic-container > p {
   color: #fff;
   font-size: 32px;
@@ -36,7 +35,7 @@
   width: 100%;
 }
 
-.topic-container .text-title{
+.topic-container .text-title {
   position: absolute;
   color: white;
   left: 45%;
@@ -44,12 +43,12 @@
   font-size: xx-large;
 }
 
-.topic-container .text-description{
+.topic-container .text-description {
   position: absolute;
   color: rgb(0, 0, 0);
   top: 80%;
   font-size: xx-large;
-  border: 3px solid #000000 ;
+  border: 3px solid #000000;
   align-content: center;
   margin-left: 10%;
   margin-right: 10%;
