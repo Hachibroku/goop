@@ -3,13 +3,11 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./Comments.css";
 
-function Comments() {
+function Comments({ currentUser }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { topicId } = useParams(); // Retrieve topicId from URL params
-
+  const { topicId } = useParams();
   useEffect(() => {
-    // Fetch comments from the API
     async function fetchComments() {
       try {
         const response = await axios.get(
@@ -22,31 +20,31 @@ function Comments() {
     }
 
     fetchComments();
-  }, [topicId]); // Run this effect whenever topicId changes
-
+  }, [topicId]);
   const handlePostComment = async () => {
     try {
-      const response = await fetch("/api/topics/topic_id/comment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: currentUser,
-          content: newComment,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/topics/${topicId}/comment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: currentUser,
+            content: newComment,
+          }),
+        }
+      );
 
       if (response.ok) {
-        // Reload comments or append the new comment to the list
         const updatedComments = [
           ...comments,
           { username: currentUser, content: newComment },
         ];
         setComments(updatedComments);
-        setNewComment(""); // clear the text field
+        setNewComment("");
       } else {
-        // Handle error
         console.error("Failed to post comment");
       }
     } catch (error) {
@@ -56,7 +54,6 @@ function Comments() {
 
   return (
     <div className="comment-section">
-      {/* Section for posting a new comment */}
       <div className="new-comment">
         <h2>Post a Comment</h2>
         <textarea
@@ -67,7 +64,6 @@ function Comments() {
         <button onClick={handlePostComment}>Post Comment</button>
       </div>
 
-      {/* Section for displaying existing comments */}
       <div className="existing-comments">
         <h2>Existing Comments</h2>
         {comments.map((comment, index) => (

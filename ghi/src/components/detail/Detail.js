@@ -4,11 +4,11 @@ import TopicDetail from "./TopicDetail";
 import Comments from "./Comments";
 import Footer from "../mainpage/Footer";
 
-function Detail() {
+function Detail({ currentUser }) {
   return (
     <>
       <TopicDetail />
-      <Comments />
+      <Comments currentUser={currentUser} />
       <Footer />
     </>
   );

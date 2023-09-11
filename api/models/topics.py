@@ -9,6 +9,7 @@ class TopicIn(BaseModel):
 
 
 class CommentIn(BaseModel):
+    username: str = None
     content: str = Field(..., max_length=140)
 
 
