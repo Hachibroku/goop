@@ -60,7 +60,7 @@ function TopicSection() {
 
   return (
     <>
-      <div onClick={() => navigate(`/topics/${topic?.id}`)}>
+      <div onClick={() => navigate(`/comments/${topic?.id}`)}>
         {topic && (
           <div className="topic-container">
             <img className="img-box" src={topic.image_url} alt={topic.title} />
