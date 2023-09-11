@@ -87,12 +87,12 @@ async def delete_topic(
 )
 async def record_vote(
     topic_id: str,
-    user_id: str,
+    username: str,
     vote_type: str,
     voting_queries: VotingQueries = Depends(),
 ):
     try:
-        voting_queries.record_vote(topic_id, user_id, vote_type)
+        voting_queries.record_vote(topic_id, username, vote_type)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -117,12 +117,12 @@ async def get_voting_data_by_topic_id(
 )
 async def update_user_vote(
     topic_id: str,
-    user_id: str,
+    username: str,
     vote_type: str,
     voting_queries: VotingQueries = Depends(),
 ):
     try:
-        voting_queries.update_vote(topic_id, user_id, vote_type)
+        voting_queries.update_vote(topic_id, username, vote_type)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -131,16 +131,16 @@ async def update_user_vote(
 
 
 @router.delete(
-    "/api/topics/{topic_id}/vote/{user_id}",
+    "/api/topics/{topic_id}/vote/{username}",
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_user_vote(
     topic_id: str,
-    user_id: str,
+    username: str,
     voting_queries: VotingQueries = Depends(),
 ):
     try:
-        voting_queries.delete_vote(topic_id, user_id)
+        voting_queries.delete_vote(topic_id, username)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
@@ -151,42 +151,44 @@ async def delete_user_vote(
 @router.post("/api/topics/{topic_id}/comment")
 async def add_comment_to_topic(
     topic_id: str,
-    user_id: str = Query(...),
+    username: str = Query(...),
     content: str = Query(...),
     comment_queries: CommentQueries = Depends(),
 ):
-    comment_queries.add_comment(topic_id, user_id, content)
+    comment_queries.add_comment(topic_id, username, content)
     return {"message": "Comment added successfully."}
 
 
 @router.get("/api/comments/")
 async def get_comments(
     topic_id: str = None,
-    user_id: str = None,
+    username: str = None,
     comment_queries: CommentQueries = Depends(),
 ):
-    comments = comment_queries.get_comments(user_id=user_id, topic_id=topic_id)
+    comments = comment_queries.get_comments(
+        username=username, topic_id=topic_id
+    )
     return {"comments": comments}
 
 
 @router.put("/api/topics/{topic_id}/comment")
 async def update_comment(
     topic_id: str,
-    user_id: str = Query(...),
+    username: str = Query(...),
     new_content: str = Query(...),
     comment_queries: CommentQueries = Depends(),
 ):
-    comment_queries.update_comment(topic_id, user_id, new_content)
+    comment_queries.update_comment(topic_id, username, new_content)
     return {"message": "Comment updated successfully."}
 
 
 @router.delete("/api/topics/{topic_id}/comment")
 async def delete_comment(
     topic_id: str,
-    user_id: str = Query(...),
+    username: str = Query(...),
     comment_queries: CommentQueries = Depends(),
 ):
-    comment_queries.delete_comment(topic_id, user_id)
+    comment_queries.delete_comment(topic_id, username)
     return {"message": "Comment deleted successfully."}
 
 
