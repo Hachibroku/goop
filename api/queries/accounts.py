@@ -1,6 +1,7 @@
 from models.accounts import AccountIn, AccountOutWithPassword
 from pymongo.errors import DuplicateKeyError
 from .client import Queries
+from bson import ObjectId
 
 
 class DuplicateAccountError(ValueError):
@@ -13,6 +14,13 @@ class AccountQueries(Queries):
 
     def get(self, email: str) -> AccountOutWithPassword:
         props = self.collection.find_one({"email": email})
+        if not props:
+            return None
+        props["id"] = str(props["_id"])
+        return AccountOutWithPassword(**props)
+
+    def get_by_id(self, user_id: str) -> AccountOutWithPassword:
+        props = self.collection.find_one({"_id": ObjectId(user_id)})
         if not props:
             return None
         props["id"] = str(props["_id"])

@@ -1,51 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Cards.css";
 import CardItem from "./CardItem";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Cards() {
+  const [topics, setTopics] = useState([]);
+  const navigate = useNavigate();
+
+  async function loadTopics() {
+    const url = "http://localhost:8000/api/topics";
+    const response = await fetch(url);
+    console.log(response);
+    if (response.ok) {
+      const data = await response.json();
+      setTopics(data);
+      console.log("here is our data", data);
+    }
+  }
+
+  useEffect(() => {
+    loadTopics();
+  }, []);
+
+  function goToTopicDetail(topicId) {
+    navigate(`/comments/${topicId}`);
+  }
+
   return (
     <div className="cards">
       <h1>Catch up with previous topics!</h1>
       <div className="cards__container">
-        <div className="cards__wrapper">
-          <ul className="cards__items">
-            <CardItem
-              src="Murpheyimage.png"
-              text="Explore my dribbble profile where underlying are my illustrations and more"
-              label="Adventure"
-              path=""
-            />
-            <CardItem
-              src="Murpheyimage.png"
-              text="Travel through the Islands of Bali in a Private Cruise"
-              label="Roleplaying"
-              path=""
-            />
-          </ul>
-          <ul className="cards__items">
-            <CardItem
-              src="Murpheyimage.png"
-              text="Set Sail in the Atlantic Ocean visiting Uncharted Waters"
-              label="Mystery"
-              path=""
-            />
-            <CardItem
-              src="Murpheyimage.png"
-              text="Experience Football on Top of the Himilayan Mountains"
-              label="Adventure"
-              path=""
-            />
-            <CardItem
-              src="Murpheyimage.png"
-              text="Ride through the Sahara Desert on a guided camel tour"
-              label="Shooter"
-              path=""
-            />
-          </ul>
-        </div>
+        {topics.length > 0 && (
+          <div className="cards__wrapper">
+            {topics.map((topic, index) => (
+              <ul
+                className="cards__items"
+                key={index}
+                onClick={() => goToTopicDetail(topic.id)}
+              >
+                <Link to={`/comment/${topic.id}`}>
+                  <CardItem
+                    src={topic.image_url}
+                    text={topic.description}
+                    label={topic.title}
+                    path={`/comment/${topic.id}`}
+                  />
+                </Link>
+              </ul>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
 export default Cards;

@@ -153,7 +153,7 @@ function AboutSection() {
             <div className="container">
               <h2 className="fullname">Luis Santana</h2>
               <p className="title">Full-Stack Developer</p>
-              <p className="title">Designer</p>
+              <p className="title">Front-End Designer</p>
               <p>Some text that describes me lorem ipsum ipsum lorem.</p>
               <div className="icon-container">
                 <a href={`https://www.linkedin.com/in/alex-natavio`}>

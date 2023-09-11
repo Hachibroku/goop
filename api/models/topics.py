@@ -8,8 +8,12 @@ class TopicIn(BaseModel):
     description: str
 
 
-class Comment(BaseModel):
-    user_id: str
+class CommentIn(BaseModel):
+    content: str = Field(..., max_length=140)
+
+
+class CommentOut(BaseModel):
+    username: str = None
     content: str = Field(..., max_length=140)
 
 
@@ -25,7 +29,7 @@ class TopicOut(BaseModel):
     image_url: str
     description: str
     voting: Optional[Voting]
-    comments: Optional[List[Comment]] = []
+    comments: Optional[List[CommentOut]] = []
 
 
 class SearchTopicOut(BaseModel):
