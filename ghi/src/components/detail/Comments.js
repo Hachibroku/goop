@@ -7,6 +7,7 @@ function Comments({ currentUser }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { topicId } = useParams();
+
   useEffect(() => {
     async function fetchComments() {
       try {
@@ -23,8 +24,8 @@ function Comments({ currentUser }) {
   }, [topicId]);
   const handlePostComment = async () => {
     try {
-      console.log("Current User:", currentUser); // Logs the current user to the console
-      console.log("New Comment:", newComment); // Logs the new comment to the console
+      console.log("Current User:", currentUser);
+      console.log("New Comment:", newComment);
 
       const response = await fetch(
         `http://localhost:8000/api/topics/${topicId}/comment`,
@@ -34,6 +35,7 @@ function Comments({ currentUser }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            topic_id: topicId,
             username: currentUser,
             content: newComment,
           }),
