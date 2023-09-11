@@ -24,6 +24,11 @@ class Voting(BaseModel):
     disagree_count: int = 0
 
 
+class VoteData(BaseModel):
+    username: str
+    vote_type: str
+
+
 class TopicOut(BaseModel):
     id: str
     title: str
