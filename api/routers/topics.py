@@ -202,8 +202,8 @@ async def delete_user_vote(
 @router.post("/api/topics/{topic_id}/comment")
 async def add_comment_to_topic(
     topic_id: str,
-    username: str = Query(...),
-    content: str = Query(...),
+    username: str,
+    content: str,
     comment_queries: CommentQueries = Depends(),
 ):
     comment_queries.add_comment(topic_id, username, content)

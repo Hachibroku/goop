@@ -96,10 +96,10 @@ h1 {
 .cards__item__text {
   color: #252e48;
   font-size: 18px;
-   line-height: 24px;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide text that exceeds the container */
-  text-overflow: ellipsis; /* Add an ellipsis for truncated text */
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media only screen and (min-width: 1200px) {

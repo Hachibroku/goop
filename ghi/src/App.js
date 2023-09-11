@@ -34,7 +34,10 @@ function App() {
             />
             <Route path="/about" element={<About />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/comments/:topicId" element={<Detail />} />
+            <Route
+              path="/comments/:topicId"
+              element={<Detail currentUser={currentUser} />}
+            />
           </Routes>
         </BrowserRouter>
       </div>

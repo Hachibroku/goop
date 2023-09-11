@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode"; // Usually, jwt_decode is imported from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 
 function TopicSection() {
   const [topic, setTopics] = useState(null);
@@ -9,16 +9,14 @@ function TopicSection() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Extract JWT and decode to find user ID
     const jwt = document.cookie
       .split("; ")
       .find((row) => row.startsWith("yourCookieName="));
     if (jwt) {
       const decodedJwt = jwt_decode(jwt.split("=")[1]);
-      setUserId(decodedJwt.id); // assuming 'id' is the field in payload
+      setUserId(decodedJwt.id);
     }
 
-    // Load initial topics
     loadTopics();
   }, []);
 

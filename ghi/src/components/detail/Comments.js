@@ -23,6 +23,9 @@ function Comments({ currentUser }) {
   }, [topicId]);
   const handlePostComment = async () => {
     try {
+      console.log("Current User:", currentUser); // Logs the current user to the console
+      console.log("New Comment:", newComment); // Logs the new comment to the console
+
       const response = await fetch(
         `http://localhost:8000/api/topics/${topicId}/comment`,
         {
