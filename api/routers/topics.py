@@ -9,6 +9,11 @@ class HttpError(BaseModel):
     detail: str
 
 
+class CommentRequest(BaseModel):
+    username: str
+    content: str
+
+
 router = APIRouter()
 
 
@@ -202,10 +207,11 @@ async def delete_user_vote(
 @router.post("/api/topics/{topic_id}/comment")
 async def add_comment_to_topic(
     topic_id: str,
-    username: str,
-    content: str,
+    comment_request: CommentRequest,
     comment_queries: CommentQueries = Depends(),
 ):
+    username = comment_request.username
+    content = comment_request.content
     comment_queries.add_comment(topic_id, username, content)
     return {"message": "Comment added successfully."}
 
