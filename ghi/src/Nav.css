@@ -7,7 +7,7 @@
   padding: 30px;
   background-color: #423449;
   color: #f88f56;
-  font-family: "Roboto", sans-serif; /* Use Arial if you prefer the original */
+  font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -25,7 +25,7 @@
 }
 
 .nav-item:hover {
-  color: #fff; /* Lighten color on hover */
+  color: #fff;
 }
 
 .nav-item a {
@@ -41,7 +41,7 @@
   width: 100%;
   padding: 20px 0;
   display: flex;
-  justify-content: flex-start; /* Left-aligned */
+  justify-content: flex-start;
   align-items: center;
   text-align: left;
 }
