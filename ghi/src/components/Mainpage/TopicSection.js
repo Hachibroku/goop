@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import "./TopicSection.css";
 
 function TopicSection() {
   const [topic, setTopics] = useState(null);
@@ -58,6 +59,7 @@ function TopicSection() {
 
   return (
     <>
+      <h2>Promoted Topic</h2>
       <div onClick={() => navigate(`/comments/${topic?.id}`)}>
         {topic && (
           <div className="topic-container">
