@@ -7,7 +7,7 @@
   padding: 30px;
   background-color: #423449;
   color: #f88f56;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif; /* Use Arial if you prefer the original */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -24,6 +24,10 @@
   text-align: center;
 }
 
+.nav-item:hover {
+  color: #fff; /* Lighten color on hover */
+}
+
 .nav-item a {
   text-decoration: none;
   color: inherit;
@@ -31,19 +35,13 @@
   font-size: 23px;
 }
 
-.token-item {
-  color:white;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding-top: 20%;
-}
-
+.token-item,
 .token-user {
-  color:rgb(255, 255, 255);
-  position: relative;
+  color: white;
+  width: 100%;
+  padding: 20px 0;
   display: flex;
-  justify-content: center;
-  text-align: center;
-  padding-top: 40%;
+  justify-content: flex-start; /* Left-aligned */
+  align-items: center;
+  text-align: left;
 }
