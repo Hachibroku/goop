@@ -7,7 +7,7 @@ import Footer from "./Footer";
 function Home() {
   return (
     <>
-      <TopicSection />
+      {/* <TopicSection /> */}
       <Cards />
       <Footer />
     </>
