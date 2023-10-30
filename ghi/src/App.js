@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Nav";
 import Create from "./AccountForm";
 import About from "./About";
 import Login from "./Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
-import "./App.css";
 import Home from "./components/mainpage/Home";
 import Detail from "./components/detail/Detail";
 import AccountPage from "./AccountPage";
