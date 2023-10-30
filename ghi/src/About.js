@@ -17,17 +17,14 @@ function AboutSection() {
       <div className="row">
         <div className="column">
           <div className="card">
-            <img
-              className="picture"
-              src="Murpheyimage.png"
-              alt="Murphey Osmundson"
-              style={{ width: "100%" }}
-            />
             <div className="container">
               <h2 className="fullname">Murphey Osmundson</h2>
               <p className="title">Full-Stack Developer</p>
               <p className="title">CEO &amp; Founder</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>
+                Visionary software developer, never afraid to push the
+                boundaries of what one can do with a computer and a keyboard.
+              </p>
               <div className="icon-container">
                 <a
                   href={`https://www.linkedin.com/in/YOURLINKEDURL`}
@@ -48,18 +45,13 @@ function AboutSection() {
 
         <div className="column">
           <div className="card">
-            <img
-              className="picture"
-              src="Aleximage.jpg"
-              alt="Alex Natavio"
-              style={{ resizeMode: "contain", width: "100%" }}
-            />
             <div className="container">
               <h2 className="fullname">Alex Natavio</h2>
               <p className="title">Full-Stack Developer</p>
               <p className="title">Front-End Designer</p>
               <p>
-                Front end development enthusiast and League of Legends enjoyer.
+                Front end development enthusiast, React Wrangler and League of
+                Legends enjoyer.
               </p>
               <div className="icon-container">
                 <a
@@ -81,17 +73,14 @@ function AboutSection() {
 
         <div className="column">
           <div className="card">
-            <img
-              className="picture"
-              src="Murpheyimage.png"
-              alt="Sung Hong"
-              style={{ resizeMode: "contain", width: "100%" }}
-            />
             <div className="container">
               <h2 className="fullname">Sung Hong</h2>
               <p className="title">Full-Stack Developer</p>
               <p className="title">Back-End Designer</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>
+                Backend Extraordinaire and Guiness World Record's verified best
+                multitasker.
+              </p>
               <div className="icon-container">
                 <a
                   href={`https://www.linkedin.com/in/YOURLINKEDURL`}
@@ -112,17 +101,13 @@ function AboutSection() {
 
         <div className="column">
           <div className="card">
-            <img
-              className="picture"
-              src="Murpheyimage.png"
-              alt="Luis Santana"
-              style={{ resizeMode: "contain", width: "100%" }}
-            />
             <div className="container">
               <h2 className="fullname">Luis Santana</h2>
               <p className="title">Full-Stack Developer</p>
               <p className="title">Front-End Designer</p>
-              <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+              <p>
+                Front-end Chief of Operations and veritable Armored Core pilot.
+              </p>
               <div className="icon-container">
                 <a
                   href={`https://www.linkedin.com/in/YOURLINKEDURL`}
