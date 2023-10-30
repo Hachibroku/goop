@@ -5,8 +5,8 @@
 <div align="center">
     <img src="https://imgur.com/tCGZNdq.jpg" alt="Logo" width="80" height="80">
 
-<h3 align="center">Gamer Oriented Opinion Portal</h3>
-<h3 align="center">"GOOP"</h3>
+<h3 align="center">Gaming Oriented Opinion Portal</h3>
+<h3 align="center">"GOOP 1.1"</h3>
 
   <p align="center">
     GOOP seeks to bring together the diverse voices of the gaming community. By creating a platform to comment and visualize opinions, this project will empower gamers to engage in meaningful discussions, stay informed, and connect with like-minded individuals. Ultimately, it will enrich the gaming experience for all participants, from players to developers and beyond.
