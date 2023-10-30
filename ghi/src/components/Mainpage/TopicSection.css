@@ -1,36 +1,54 @@
-.topic-container {
+.container {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Take up as much width as possible */
-  max-width: 1280px; /* But don't exceed 1280px */
-  margin: 20px auto; /* 20px top-bottom margin, auto left-right margin for centering */
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px; /* Optional: Adjust this value as you see fit. */
+  margin: 0 auto;
+}
+
+.cards {
+  padding: 4rem;
+  background: #fff;
+}
+
+.cards__container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cards__wrapper {
+  position: relative;
+  margin: 50px 0 45px;
+}
+
+.cards__items,
+.topic-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 20px auto;
   border: 1px solid white;
   border-radius: 10px;
   color: #ffffff;
 }
 
-.topic-container h1,
-.topic-container p {
-  color: #fff;
+.cards__item {
+  display: flex;
+  flex: 1;
+  margin: 0 0.5rem;
+  border-radius: 10px;
 }
 
-.topic-container h1 {
-  font-size: 100%;
-}
-
-.topic-container p {
-  font-size: 32px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-}
-
-.topic-btns {
-  margin-top: 32px;
-}
-
-.topic-btns .btn {
-  margin: 60px;
+.cards__items--promoted {
+  border: 2px solid #f88f56;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .img-box {
@@ -40,7 +58,8 @@
   overflow: hidden;
 }
 
-.img-box img {
+.img-box img,
+.cards__item__img {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,21 +69,56 @@
   object-position: center;
 }
 
-.text-title {
+.text-title,
+.text-description {
   position: absolute;
-  color: white;
-  left: 45%;
-  bottom: 90%;
   font-size: xx-large;
 }
 
+.text-title {
+  color: white;
+  left: 45%;
+  bottom: 90%;
+}
+
 .text-description {
-  position: absolute;
   color: rgb(0, 0, 0);
   top: 80%;
-  font-size: xx-large;
   border: 3px solid #000;
   margin: 0 10% 10px 10%;
   background-color: rgba(255, 255, 255, 0.7);
   padding: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Adjust this value for desired spacing between buttons. */
+}
+
+.topic-btns {
+  margin-top: 32px;
+}
+
+.topic-btns .btn,
+.buttons .btn {
+  margin: 60px;
+}
+
+@media only screen and (min-width: 1200px) {
+  .content__blog__container {
+    width: 84%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .cards__items {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .cards__item {
+    margin-bottom: 2rem;
+  }
 }

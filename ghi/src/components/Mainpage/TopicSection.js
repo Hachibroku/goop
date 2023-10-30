@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import CardItem from "./CardItem.js";
 import "./TopicSection.css";
 
 function TopicSection() {
@@ -52,40 +53,45 @@ function TopicSection() {
       });
 
       if (response.ok) {
-        navigate(`/comment/${topic.id}`);
+        navigate(`/comments/${topic.id}`);
       }
     }
   };
 
   return (
     <>
-      <h2>Promoted Topic</h2>
-      <div onClick={() => navigate(`/comments/${topic?.id}`)}>
-        {topic && (
-          <div className="topic-container">
-            <img className="img-box" src={topic.image_url} alt={topic.title} />
-            <div className="text-title">{topic.title}</div>
-            <div className="text-description">{topic.description}</div>
-          </div>
-        )}
-      </div>
-      <div className="buttons">
-        <Button
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-          onClick={handleAgreeClick}
-        >
-          AGREE
-        </Button>
-        <Button
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-          onClick={handleDisagreeClick}
-        >
-          DISAGREE
-        </Button>
+      <div className="container">
+        <div onClick={() => navigate(`/comments/${topic?.id}`)}>
+          <h2>Promoted Topic</h2>
+          {topic && (
+            <CardItem
+              promoted
+              src={topic.image_url}
+              text={topic.description}
+              label={topic.title}
+              path={`/comments/${topic.id}`}
+              id={topic.id}
+            />
+          )}
+        </div>
+        <div className="buttons">
+          <Button
+            className="btns"
+            buttonStyle="btn--outline"
+            buttonSize="btn--large"
+            onClick={handleAgreeClick}
+          >
+            AGREE
+          </Button>
+          <Button
+            className="btns"
+            buttonStyle="btn--outline"
+            buttonSize="btn--large"
+            onClick={handleDisagreeClick}
+          >
+            DISAGREE
+          </Button>
+        </div>
       </div>
     </>
   );
