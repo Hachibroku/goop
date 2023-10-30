@@ -6,11 +6,10 @@ function TopicDetail() {
   const [topic, setTopic] = useState(null);
   const { topicId } = useParams();
 
-  console.log("Current TopicId from useParams:", topicId); // Debugging Line
+  console.log("Current TopicId from useParams:", topicId);
 
   const fetchTopic = async () => {
     try {
-      // Note the '/by_id' at the end to match the new API route.
       const url = `http://localhost:8000/api/topics/${topicId}/by_id`;
       const response = await fetch(url);
       if (response.ok) {
@@ -19,7 +18,6 @@ function TopicDetail() {
           console.log("Received empty array from API");
         } else {
           console.log("Data from API:", data);
-          // Assuming you only expect one topic to be returned, you might want to set it to data[0].
           setTopic(data[0]);
         }
       } else {
@@ -31,11 +29,11 @@ function TopicDetail() {
   };
 
   useEffect(() => {
-    console.log("useEffect Triggered"); // Debugging Line
+    console.log("useEffect Triggered");
     fetchTopic();
   }, [topicId]);
 
-  console.log("Current Topic State:", topic); // Debugging Line
+  console.log("Current Topic State:", topic);
 
   return (
     <>
