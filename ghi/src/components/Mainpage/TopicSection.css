@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 1200px; /* Optional: Adjust this value as you see fit. */
   margin: 0 auto;
+  color: #ffffff;
 }
 
 .cards {
@@ -44,6 +45,8 @@
   flex: 1;
   margin: 0 0.5rem;
   border-radius: 10px;
+  color: #ffffff;
+  background-color: #ffffff;
 }
 
 .cards__items--promoted {
@@ -51,11 +54,12 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.img-box {
-  position: relative;
-  padding: 0 2% 2.5%;
+.img-box img,
+.cards__item__img {
   width: 100%;
-  overflow: hidden;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .img-box img,
