@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Button } from "../mainpage/Button";
+import { useNavigate } from "react-router-dom";
+
 import "./TopicDetail.css";
 
 function TopicDetail() {
   const [topic, setTopic] = useState(null);
   const { topicId } = useParams();
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   console.log("Current TopicId from useParams:", topicId);
 
@@ -29,11 +34,34 @@ function TopicDetail() {
   };
 
   useEffect(() => {
-    console.log("useEffect Triggered");
     fetchTopic();
   }, [topicId]);
+  const handleAgreeClick = () => {
+    recordVote("agree");
+  };
 
-  console.log("Current Topic State:", topic);
+  const handleDisagreeClick = () => {
+    recordVote("disagree");
+  };
+
+  const recordVote = async (voteType) => {
+    if (topic && topic.id && userId) {
+      const url = `http://localhost:8000/api/topics/${topic.id}/vote`;
+      const payload = {
+        user_id: userId,
+        vote_type: voteType,
+      };
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchTopic();
+  }, [topicId]);
 
   return (
     <>
@@ -42,6 +70,26 @@ function TopicDetail() {
           <img className="img-box" src={topic.image_url} alt={topic.title} />
           <div className="topic-title">{topic.title}</div>
           <div className="topic-content">{topic.description}</div>
+
+          {/* Voting buttons */}
+          <div className="buttons">
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={handleAgreeClick}
+            >
+              AGREE
+            </Button>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={handleDisagreeClick}
+            >
+              DISAGREE
+            </Button>
+          </div>
         </div>
       )}
     </>
