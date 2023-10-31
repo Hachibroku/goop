@@ -29,7 +29,7 @@ function Cards() {
 
   return (
     <div className="cards">
-      <h1>Check out today's topics!</h1>
+      <h1>Check out today's other topics!</h1>
       <div className="cards__container">
         {topics.length > 0 && (
           <div className="cards__wrapper">

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "../mainpage/Button";
-import { useNavigate } from "react-router-dom";
 
 import "./TopicDetail.css";
 
@@ -9,7 +8,6 @@ function TopicDetail() {
   const [topic, setTopic] = useState(null);
   const { topicId } = useParams();
   const [userId, setUserId] = useState(null);
-  const navigate = useNavigate();
 
   console.log("Current TopicId from useParams:", topicId);
 
@@ -36,6 +34,7 @@ function TopicDetail() {
   useEffect(() => {
     fetchTopic();
   }, [topicId]);
+
   const handleAgreeClick = () => {
     recordVote("agree");
   };
@@ -71,7 +70,6 @@ function TopicDetail() {
           <div className="topic-title">{topic.title}</div>
           <div className="topic-content">{topic.description}</div>
 
-          {/* Voting buttons */}
           <div className="buttons">
             <Button
               className="btns"
