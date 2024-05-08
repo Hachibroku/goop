@@ -232,6 +232,16 @@ async def get_all_topics(topics_queries: TopicQueries = Depends()):
         )
 
 
+# async def get_all_games(queries: GamesQueries = Depends():
+#     account_data: dict = Depends(authenticator.get_current_account_data),
+#     try:
+#         all_games = queries.get_all_games(account_data['id'])
+#         return all_games
+#     except Exception as e:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND, detail=str(e)
+
+
 @router.get("/api/topic-of-the-day", response_model=TopicOut | HttpError)
 async def get_topic_of_the_day(topics_queries: TopicQueries = Depends()):
     try:
