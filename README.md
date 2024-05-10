@@ -46,6 +46,8 @@ This web application is designed to provide gamers and enthusiasts with a compre
 
 [Excalidraw Wireframes](https://excalidraw.com/#room=a9a88add792be319a12e,iKu_RzqauWQ8NNKoFicpYw) · [Excalidraw API Design](https://excalidraw.com/#room=a9a88add792be319a12e,iKu_RzqauWQ8NNKoFicpYw)
 
+[![endpoints-screenshot]]
+
 ### Built With
 
 [![FastAPI][Fastapi.tiangolo.com]][Fastapi-url] &nbsp; [![React][React.js]][React-url] &nbsp; [![ReactRouter][ReactRouter.com]][ReactRouter-url]
@@ -94,6 +96,7 @@ To get a local copy of GOOP up and running on your machine follow these simple s
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [project-screenshot]: screenshot.png
+[endpoints-screenshot]: goop_endpoints.png
 [Fastapi.tiangolo.com]: https://img.shields.io/badge/Fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white
 [FastAPI-url]: https://fastapi.tiangolo.com/
 [React.js]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white
