@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './Form.css';
+// commenting out the styling changes nothing
+// I do not know where this page is getting it's styling from
+// It should really be renamed LoginForm but I'll change that another time
+// import './LoginForm.css';
 import { useNavigate } from "react-router-dom"
 
 const AccountForm = () => {
@@ -65,15 +68,15 @@ const AccountForm = () => {
   };
 
   useEffect(() => {
-  if (success || error) {
-    navigate("/login");
-  }
-}, [success, error, navigate]);
+    if (success || error) {
+      navigate("/login");
+    }
+  }, [success, error, navigate]);
 
   return (
-      <div>
-    <h1 className='formHeader'> Create an Account </h1>
-    <form onSubmit={handleSubmit}>
+    <div>
+      <h1 className='formHeader'> Create an Account </h1>
+      <form onSubmit={handleSubmit}>
 
         <label>
           Email:
@@ -86,35 +89,35 @@ const AccountForm = () => {
         </label>
         <br />
 
-      <label>
-        Username:
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
 
-      <label>
-        Password:
-        <input
-          type={showPassword ? 'text' : 'password'}
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-      </label>
-      <button type="button"
-              onClick={togglePasswordVisibility}>
-        {showPassword ? 'Hide' : 'Show'} Password
-      </button>
-      <br />
+        <label>
+          Password:
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+        </label>
+        <button type="button"
+          onClick={togglePasswordVisibility}>
+          {showPassword ? 'Hide' : 'Show'} Password
+        </button>
+        <br />
 
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };
