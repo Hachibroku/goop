@@ -24,7 +24,6 @@ html {
 
 .column {
   flex: 1;
-  /* width: 25%; */
   margin-bottom: 12px;
   padding: 0 20px;
   box-sizing: border-box;
@@ -61,12 +60,6 @@ html {
   padding: 0 18px;
 }
 
-/* .container::after, .row::after {
-  content: "";
-  clear: both;
-  display: table;
-} */
-
 .title {
   color: rgb(78, 78, 78);
   text-align: center;
@@ -91,13 +84,6 @@ html {
 .button:hover {
   background-color: #555;
 }
-
-/* @media screen and (max-width: 10px) {
-  .column {
-    width: 100%;
-    display: block;
-  }
-} */
 
 .header-white {
   text-align: center;

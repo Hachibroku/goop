@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "./Button";
+import { Button } from "./Button.js";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import CardItem from "./CardItem.js";
