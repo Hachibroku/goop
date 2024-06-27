@@ -12,7 +12,15 @@ class AccountQueries(Queries):
     DB_NAME = "module3-project-gamma-mongo"
     COLLECTION = "accounts"
 
-    def get(self, email: str) -> AccountOutWithPassword:
+    # Get by username
+    def get(self, username: str) -> AccountOutWithPassword:
+        props = self.collection.find_one({"username": username})
+        if not props:
+            return None
+        props["id"] = str(props["_id"])
+        return AccountOutWithPassword(**props)
+
+    def get_by_email(self, email: str) -> AccountOutWithPassword:
         props = self.collection.find_one({"email": email})
         if not props:
             return None
