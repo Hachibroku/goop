@@ -75,12 +75,12 @@ async def create_account(
     return AccountToken(account=account, **token.dict())
 
 
-@router.get("/api/accounts/{email}", response_model=AccountOutWithPassword)
-async def get_account_by_email(
-    email: str, account_queries: AccountQueries = Depends()
+@router.get("/api/accounts/{username}", response_model=AccountOutWithPassword)
+async def get_account_by_username(
+    username: str, account_queries: AccountQueries = Depends()
 ):
     try:
-        account = account_queries.get(email)
+        account = account_queries.get(username)
         if not account:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

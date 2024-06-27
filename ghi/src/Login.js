@@ -11,9 +11,9 @@ const Login = ({ setCurrentUser, currentUser }) => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const getUsername = async (email) => {
+  const getUsername = async (username) => {
     try {
-      const url = `http://localhost:8000/api/accounts/${email}`;
+      const url = `http://localhost:8000/api/accounts/${username}`;
       const response = await fetch(url, {
         credentials: "include",
       });
@@ -56,7 +56,7 @@ const Login = ({ setCurrentUser, currentUser }) => {
       <div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="div-login">
-            <label className="label-login">Email:</label>
+            <label className="label-login">Username:</label>
             <input
               name="username"
               type="text"
