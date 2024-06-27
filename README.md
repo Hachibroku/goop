@@ -46,7 +46,7 @@ This web application is designed to provide gamers and enthusiasts with a compre
 
 [Excalidraw Wireframes](https://excalidraw.com/#room=a9a88add792be319a12e,iKu_RzqauWQ8NNKoFicpYw) · [Excalidraw API Design](https://excalidraw.com/#room=a9a88add792be319a12e,iKu_RzqauWQ8NNKoFicpYw)
 
-[![endpoints-screenshot]]
+![endpoints-screenshot]
 
 ### Built With
 
