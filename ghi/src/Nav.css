@@ -2,46 +2,57 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 130px;
+  width: 200px; /* Increased width for better visibility */
   height: 100%;
-  padding: 30px;
-  background-color: #423449;
-  color: #f88f56;
+  padding: 20px;
+  background-color: #424242; /* Dark grey background for Material UI */
+  color: #ffffff;
   font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start; /* Left-aligned items */
   z-index: 2;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .nav-item {
   margin-bottom: 10px;
-  padding-top: 15px;
-  padding-right: 40px;
+  padding: 10px 20px;
   display: flex;
-  justify-content: center;
-  text-align: center;
+  justify-content: flex-start; /* Left-align text */
+  text-align: left; /* Left-align text */
+  width: 100%;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+  border-radius: 4px; /* Rounded corners */
 }
 
 .nav-item:hover {
-  color: #fff;
+  background-color: #616161; /* Darker grey on hover */
+  color: #ffffff;
 }
 
 .nav-item a {
   text-decoration: none;
   color: inherit;
-  font-weight: 300;
-  font-size: 23px;
+  font-weight: 400; /* Normal weight for a clean look */
+  font-size: 18px; /* Slightly smaller font size */
 }
 
 .token-item,
 .token-user {
-  color: white;
+  color: #ffffff;
   width: 100%;
-  padding: 20px 0;
+  padding: 15px 20px; /* Adjusted padding */
   display: flex;
   justify-content: flex-start;
   align-items: center;
   text-align: left;
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.token-item:hover,
+.token-user:hover {
+  background-color: #616161; /* Darker grey on hover */
 }
