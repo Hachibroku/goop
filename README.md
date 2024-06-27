@@ -38,7 +38,7 @@
 
 ## About The Project
 
-[![Project Name Screen Shot][project-screenshot]]
+![Project Name Screen Shot][project-screenshot]
 
 This web application is designed to provide gamers and enthusiasts with a comprehensive platform for discussing and sharing opinions on video game-related topics. This project aims to create a dynamic and engaging space where gamers can express their thoughts, insights, and critiques about video games, fostering a vibrant community of like-minded individuals.
 
