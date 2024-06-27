@@ -63,7 +63,7 @@ function TopicDetail() {
   }, [topicId]);
 
   return (
-    <>
+    <div className="top-level">
       {topic && (
         <div className="topic-detail-container">
           <img className="img-box" src={topic.image_url} alt={topic.title} />
@@ -90,7 +90,7 @@ function TopicDetail() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
