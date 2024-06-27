@@ -7,7 +7,7 @@ import About from "./About";
 import Login from "./Login";
 import Home from "./components/mainpage/Home";
 import Detail from "./components/detail/Detail";
-import AccountPage from "./AccountPage";
+import AccountPage from "./AccountForm";
 
 const baseUrl = "http://localhost:8000";
 

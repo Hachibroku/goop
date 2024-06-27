@@ -1,6 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
-import "./Form.css";
+import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ setCurrentUser, currentUser }) => {
